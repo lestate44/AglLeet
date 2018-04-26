@@ -40,10 +40,21 @@ int lengthOfLongestSubStringSS(string s);
 #pragma region Problem 4 Median of Two Sorted Arrays
 double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2);
 double findK(vector<int>& a, int alen, int as, vector<int>& b, int blen, int bs, int k);
+double findMedian(vector<int>& nums1, vector<int>& nums2);
 #pragma endregion
 
+#pragma region 5 Longest Palindromic Substring
+string longestPalindrome(string s);
+#pragma endregion
 
+#pragma region 7 Reverse Integer
+int reversestr(int x);
+int reverse(int x);
+#pragma endregion
 
+#pragma region 8 String to Integer (atoi)
+int myAtoi(string str);
+#pragma endregion
 
 
 

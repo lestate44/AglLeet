@@ -5,7 +5,7 @@
 #include "Leet.h"
 #include <iomanip>
 #include <limits>
-
+#include <conio.h>
 using namespace std;
 
 
@@ -14,6 +14,7 @@ int main()
 {
 	cout.precision(4);
 	cout << fixed;
+
 	//1. Two Sums
 	//vector<int> nums{ 5,3,4,5,1 };
 	//vector<int> result = twosummap(nums, 5);
@@ -37,7 +38,6 @@ int main()
 	//ListNode* result3 = addTwoNumberRe(l1, l2);
 	//result3->display();
 
-
 	//671 Hamming Distance
 	//cout << hammingDistance(2, 3) << endl;
 
@@ -48,10 +48,23 @@ int main()
 	//cout << result1 << " " << result2;
 	
 	//4 Median of Two Sorted Arrays
-	//vector<int> nums1 = { 100001 };
-	//vector<int> nums2 = { 100000 };
+	vector<int> nums1 = {1,2 };
+	vector<int> nums2 = {};
+	cout  <<std::setprecision(2)<< findMedian(nums1, nums2);
 
-	//cout  <<std::setprecision(2)<< findMedianSortedArrays(nums1, nums2);
+	// 5 Longest Palindromic Substring
+	//string a = "babad";
+	//cout << longestPalindrome(a);
+
+	//7. Reverse Integer
+	//int s = 12345678901;
+	//cout << reverse(s) << endl;
+
+	//8. String to Integer
+	//string str = "   44 best";
+	//cout << myAtoi(str);
+
+	
 
 
 }

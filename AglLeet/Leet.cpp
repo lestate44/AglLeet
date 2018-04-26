@@ -6,6 +6,7 @@
 #include <map>
 #include "Leet.h"
 #include <algorithm>
+#include <iomanip>
 
 using namespace std;
 
@@ -225,7 +226,6 @@ double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2)
 
 double findK(vector<int>& a, int alen, int as, vector<int>& b, int blen, int bs, int k)
 {
-	int pa, pb;
 	if (alen > blen)
 		return findK(b, blen, bs, a, alen, as, k);
 	if (alen == 0)
@@ -243,6 +243,138 @@ double findK(vector<int>& a, int alen, int as, vector<int>& b, int blen, int bs,
 	else return findK(a, alen, as, b, blen - pblen, midb + 1, k - pblen);
 }
 
+double findMedian(vector<int>& nums1, vector<int>& nums2)
+{
+	int len1 = nums1.size(), len2 = nums2.size();
+	if (len1 > len2)return findMedian(nums2, nums1);
+	int mid = (len1 + len2 + 1) / 2;
+	int left = 0, right = len1;
+	int i, j;
+	while (left <= right)
+	{
+		i = (left+right)/2, j = mid-i;
+		if ( i < len1 && nums1[i] < nums2[j - 1])
+		{
+			left = i + 1;
+		}
+		else if (i > 0 && nums2[j] < nums1[i - 1])
+		{
+			right = i - 1;
+		}
+		else
+		{
+			break;
+		}
+	}
+	int result1;
+	if (i == 0)
+		result1 = nums2[j - 1];
+	else if (j == 0)
+		result1 = nums1[i - 1];
+	else
+		result1 = max(nums1[i - 1], nums2[j - 1]);
+	if ((len1 + len2) & 1) return result1;
+	int result2;
+	if (i == len1) result2 = nums2[j];
+	else if (j == len2) result2 = nums1[i];
+	else
+	{
+		result2 = min(nums1[i], nums2[j]);
+	}
+	return (result1 + result2) / 2.0;
+}
+
+
+
 #pragma endregion
 
+#pragma region 5 Longest Palindromic Substring
+string longestPalindrome(string s)
+{
+	string max = s.substr(0,1);
+	int maxlen = 0;
+	for (int i = 0; i < s.length(); ++i)
+	{
+		int left = i, right = i, midl = i, midr = i + 1;
+		int len1 = 0, len2 = 0;
+		while (left >= 0 && right < s.length() && s[left] == s[right])
+		{
+			--left;
+			++right;
+			++len1;
+		}
+		while (midl >= 0 && midr < s.length() && s[midl] == s[midr])
+		{
+			--midl;
+			++midr;
+			++len2;
+		}
+		if (maxlen < std::max(2*len1-1, 2*len2))
+		{
+			maxlen = std::max(2 * len1 - 1, 2 * len2);
+			len1 > len2 ? max = s.substr(i-len1+1,2*len1-1) : max = s.substr(i-len2+1,2*len2);
+		}
 
+	}
+
+	return max;
+}
+
+#pragma endregion
+
+#pragma region 7 Reverse Integer
+int reversestr(int x)
+{	
+	int re;
+	string s = std::to_string(x);
+	if (x<0)
+	{
+		string result="-";
+		for (int i = s.length() - 1; i > 0; --i)
+		{
+			result += s[i];
+		}
+		re = std::stoi(result);
+	}
+	else
+	{
+		string result = "";
+		cout << s.length() << endl;
+		for (int i = s.length() - 1; i >= 0; --i)
+		{
+			result += s[i];
+			cout << result << endl;
+		}
+		re = std::stoi(result);
+	}
+	return re;
+}
+
+int reverse(int x)
+{
+
+	long r = 0;
+	while (x) r = r * 10 + x % 10, x /= 10;
+	return (int(r) == r) * r;
+
+
+
+}
+#pragma endregion
+
+#pragma region 8 String to Integer (atoi)
+int myAtoi(string str)
+{
+	long result = 0;		
+	int i = str.find_first_not_of(' '), sign = 1;
+	if (str[i] == '+' || str[i] == '-') sign = str[i++] == '+' ? 1 : -1;
+	while (isdigit(str[i]))
+	{
+		result = result * 10 + (str[i++] - '0');
+		if (sign*result >= INT_MAX) return INT_MAX;
+		if (sign*result <= INT_MIN) return INT_MIN;
+	}
+	return result * sign;
+
+}
+#pragma endregion
