@@ -7,10 +7,36 @@
 #include "Leet.h"
 #include <algorithm>
 #include <iomanip>
+#include <exception>
 
 using namespace std;
 
-#pragma region problem1 Two Sum
+#pragma region class test
+int test::plus()
+{
+	return 0;
+}
+#pragma endregion
+
+#pragma region ListNode Struct
+void ListNode::add(const int& x) {
+	this->end->next = new ListNode(x);
+	end = end->next;
+}
+
+void ListNode::display()
+{
+	ListNode* temp = this;
+	while (temp != NULL)
+	{
+		cout << "{" << temp->val << "} ";
+		temp = temp->next;
+	}
+	cout << endl;
+}
+#pragma endregion
+
+#pragma region 1 Two Sum
 vector<int> twosum(vector<int>& nums, int target) 
 {
 	unordered_map<int, int>hash;
@@ -43,23 +69,9 @@ vector<int> twosummap(vector<int>& nums, int target)
 
 #pragma endregion
 
-#pragma region problem2 Add Two Numbers
+#pragma region 2 Add Two Numbers
 //2. Add Two Numbers
-void ListNode::add(const int& x) {
-	this->end->next = new ListNode(x);
-	end = end->next;
-}
 
-void ListNode::display()
-{
-	ListNode* temp = this;
-	while (temp != NULL)
-	{
-		cout << "{" << temp->val << "} ";
-		temp = temp->next;
-	}
-	cout << endl;
-}
 
 
 ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
@@ -155,7 +167,7 @@ ListNode* addTwoNumberRe(ListNode* l1, ListNode* l2) {
 
 #pragma endregion
 
-#pragma region Problem 461 Hamming Distance
+#pragma region 461 Hamming Distance
 int hammingDistance(int x, int y)
 {
 	int z = x ^ y;
@@ -169,7 +181,7 @@ int hammingDistance(int x, int y)
 }
 #pragma endregion
 
-#pragma region Problem 3 Longest Substring Without Repeating Characters
+#pragma region 3 Longest Substring Without Repeating Characters
 int lengthOfLongestSubstring(string s) 
 {	
 	unordered_map<char, int> hash;
@@ -213,7 +225,7 @@ int lengthOfLongestSubStringSS(string s)
 }
 #pragma endregion
 
-#pragma region Problem 4 Median of Two Sorted Arrays
+#pragma region 4 Median of Two Sorted Arrays
 double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2)
 {
 	int lena = nums1.size(), lenb = nums2.size();
@@ -320,6 +332,50 @@ string longestPalindrome(string s)
 	return max;
 }
 
+string manacher(string s)
+{
+	string rs;
+	for (int i = 0; i != s.size(); ++i)
+	{
+		rs += '#';
+		rs += s[i];
+	}
+	rs += '#';
+	cout << rs << endl;
+	int center = 0, maxlen = 0, bound = 0, maxcen = 0;
+	vector<int> ct(rs.size(), 0);
+
+	for (int i = 0; i != rs.size(); ++i)
+	{
+		int j = 2 * center - i;
+		ct[i] = bound > i ? (min(ct[j], bound - i)) : 1;
+		cout << bound<<" "<<i << endl;
+		while (i - ct[i] >= 0&& i + ct[i]<rs.size()/*&&j>=0&&(ct[j]==bound-i||bound<=i)*/)
+		{
+			if (rs[i + ct[i]] == rs[i - ct[i]])
+				ct[i]++;
+			else
+				break;
+		}
+		if (i + ct[i] > bound)
+		{
+			bound = i + ct[i];
+			center = i;
+		}
+		if (ct[i] > maxlen)
+		{
+			maxlen = ct[i];
+			maxcen = i;
+		}
+	}
+	for (int i=0;i<ct.size();i++)
+		cout << ct[i];
+	cout << endl;
+	return s.substr((maxcen - maxlen+1) / 2, maxlen - 1);
+
+
+}
+
 #pragma endregion
 
 #pragma region 7 Reverse Integer
@@ -375,6 +431,328 @@ int myAtoi(string str)
 		if (sign*result <= INT_MIN) return INT_MIN;
 	}
 	return result * sign;
+
+}
+#pragma endregion
+
+#pragma region 11 Container With Most Water
+int maxArea(vector<int>& height)
+{
+	int left = 0, right = height.size() - 1, area = 0;
+	while (left<right)
+	{
+		if (height[left] < height[right])
+		{
+			area = max(area, (right - left)*height[left]);
+			left++;
+		}
+		else
+		{
+			area = max(area, (right - left)*height[right]);
+			right--;
+		}
+	}
+	return area;
+}
+#pragma endregion
+
+#pragma region 13 Roman to Integer
+int getvalue(char i)
+{
+	
+	switch (i)
+	{
+	case 'I': return 1;
+	case 'V': return 5;
+	case 'X': return 10;
+	case 'L': return 50;
+	case 'C': return 100;
+	case 'D': return 500;
+	case 'M': return 1000;
+	}
+	throw ("non recognizable character");
+	return 0;
+}
+int romanToInt(string s)
+{	
+	int result = 0;
+	for (int i = 0; i < s.length(); i++)
+	{
+		int next = i + 1;
+		try
+		{
+			if (i + 1 < s.length() && getvalue(s[i]) < getvalue(s[next]))
+			{
+				result -= getvalue(s[i]);
+			}
+			else
+				result += getvalue(s[i]);
+		}
+		catch (const char* msg)
+		{
+			cerr << msg << endl;
+			return 0;
+		}
+
+	}
+	return result;
+
+
+}
+#pragma endregion
+
+#pragma region 14 Longest Common Prefix
+
+string longestCommonPrefix(vector<string>& strs)
+{
+	string result("");
+	int ind = 0;
+	while (!strs.empty())
+	{
+		for (int i = 0; i<strs.size(); i++)
+		{
+			if (ind >= strs[i].size() || strs[0][ind]!= strs[i][ind])
+			{
+				return result;
+			}
+		}
+		result += strs[0][ind];
+		ind++;
+	}
+	return result;
+}
+
+
+#pragma endregion
+
+#pragma region 17 Letter Combinations of a Phone Number
+vector<string> letterCombinations(string digits)
+{	
+	if (digits.empty()) return vector<string>();
+	vector<string> result;
+	result.push_back("");
+	vector<string> map{"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+	for (int i = 0; i != digits.length(); ++i)
+	{
+		int num = digits[i] - '0';
+		string value = map[num];
+		vector<string> temp;
+		for (int j = 0; j != value.size(); ++j)
+		{
+			for (int k = 0; k != result.size(); ++k)
+			{
+				temp.push_back(result[k] + value[j]);
+			}
+		}
+		result.swap(temp);
+
+	}
+	return result;
+}
+
+vector<string> letterCombinationsRe(string digits)
+{	
+	if (digits.empty()) return vector<string>();
+	vector<string> result;
+	vector<string> map{ "","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz" };        
+	dfs(digits, 0, "", map, result);
+	return result;
+}
+void dfs(string digits, int level, string out, vector<string> map, vector<string> &result)
+{
+	if (level == digits.size()) {
+		//cout << out << endl;
+		result.push_back(out);
+	}
+
+	else
+	{
+		string str = map[digits[level] - '0'];
+		for (int i = 0; i != str.size(); ++i)
+		{	
+			string tt = out;
+			tt += str[i];
+			/*out += str[i];*/
+
+			dfs(digits, level + 1, tt, map, result);
+			//out.pop_back();
+		}
+	}
+}
+#pragma endregion
+
+#pragma region 15 3Sum
+vector<vector<int>> threesum(vector<int>& nums)
+{	
+	vector<vector<int>> result;
+	if (nums.size() == 0)
+		return result;
+	sort(nums.begin(), nums.end());
+	//for (auto i : nums)
+	//	cout << i<<",";
+	cout << endl;
+	for (int i = 0; i+1 < nums.size(); ++i)
+	{
+
+		int left = i + 1, right = nums.size() - 1;
+		while (left < right)
+		{	
+			if (nums[left] + nums[right] == -nums[i])
+			{
+				vector<int> temp = {nums[i],nums[left],nums[right]};
+				result.push_back(temp);
+				while (left < right&&temp[1] == nums[left])
+					left++;
+				while (left < right&&temp[2] == nums[right])
+					right--;
+			}
+			else if (nums[left] + nums[right] < -nums[i])
+			{
+				left++;
+			}
+			else if (nums[left] + nums[right] > -nums[i])
+			{
+				right--;
+			}
+		}
+		while (i+1 < nums.size() && nums[i + 1] == nums[i])
+			i++;
+		
+	}
+	return result;
+
+}
+#pragma endregion
+
+#pragma region 19 Remove Nth Node From End of List
+ListNode* removeNthFromEnd(ListNode* head, int n)
+{
+	ListNode* first = new ListNode(0);
+	first->next = head;
+	int len = 0;
+	ListNode *temp = head;
+	while (temp->next != NULL)
+	{
+		temp = temp->next;
+		len++;
+	}
+	len++;
+	temp = first;
+	for (int i = 0; i != len - n; i++)
+	{
+		temp = temp->next;
+	}
+	ListNode* nex = temp->next->next;
+	temp->next->next = NULL;
+	temp->next = nex;
+
+	return first->next;
+}
+
+ListNode* removeNthFromEndOP(ListNode* head, int n)
+{
+	ListNode* first = new ListNode(0);
+	ListNode* second = new ListNode(0);
+	first->next = head;
+	second->next = head;
+	ListNode* temp = first;
+	int j = 0;
+	while (true)
+	{
+		j++;
+		second = second->next;
+		if (j>n + 1)
+			first = first->next;
+		if (second == NULL)
+			break;
+	}
+	ListNode* temp1 = first->next;
+	first->next = first->next->next;
+	temp1->next = NULL;
+	return temp->next;
+}
+
+#pragma endregion
+
+#pragma region 20 Valid Parentheses
+bool isValid(string s)
+{
+	vector<char> stack;
+	for (int i = 0; i<s.length(); i++)
+	{
+		if (s[i] == '(' || s[i] == '[' || s[i] == '{')
+			stack.push_back(s[i]);
+		else
+		{
+			if (stack.size() == 0 || !match(stack.back(), s[i]))
+				return false;
+			stack.pop_back();
+		}
+	}
+	if (stack.size() != 0)
+		return false;
+	return true;
+}
+
+bool match(char left, char right)
+{
+	if ((left == '('&&right == ')') || (left == ')'&&right == '('))
+		return true;
+	if ((left == '['&&right == ']') || (left == ']'&&right == '['))
+		return true;
+	if ((left == '{'&&right == '}') || (left == '}'&&right == '{'))
+		return true;
+	return false;
+}
+#pragma endregion
+
+#pragma region 21 Merge Two Sorted Lists
+ListNode* mergeTwoLists(ListNode* l1, ListNode* l2)
+{
+	ListNode* head = new ListNode(0);
+	ListNode* tail = head;
+	while (l1&&l2)
+	{
+		if (l1->val<l2->val)
+		{
+			tail->next = l1;
+			l1 = l1->next;
+		}
+		else
+		{
+			tail->next = l2;
+			l2 = l2->next;
+		}
+		tail = tail->next;
+	}
+	tail->next = l1 ? l1 : l2;
+
+	return head->next;
+}
+#pragma endregion
+
+#pragma region 22 Generate Parentheses
+vector<string> generateParenthesis(int n)
+{
+	vector<string> ans;
+	backtrack(ans, "", 0, 0, n);
+	return ans;
+}
+void backtrack(vector<string>& ans, string cur, int open, int close, int max)
+{
+	if (cur.length() == max * 2)
+	{
+		ans.push_back(cur);
+		return;
+	}
+	if (open < max)
+	{
+		backtrack(ans, cur + "(", open + 1, close, max);
+	}
+	if (close < open)
+	{
+		backtrack(ans, cur + ")", open, close + 1, max);
+	}
 
 }
 #pragma endregion
