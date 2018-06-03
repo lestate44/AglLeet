@@ -109,14 +109,56 @@ vector<string> generateParenthesis(int n);
 void backtrack(vector<string>& ans, string cur, int open, int close, int max);
 #pragma endregion
 
+#pragma region 26 Remove Duplicates from Sorted Array
+int removeDuplicates(vector<int>& nums);
+void it(vector<int>& nums, int start);
+#pragma endregion
 
+#pragma region 28 Implement strStr()
+int strStr(string haystack, string needle);
+#pragma endregion
 
+#pragma region 29 Divide Two Integers
+int divide(int dividend, int divisor);
+#pragma endregion
 
+#pragma region 69 Sqrt(x)
+int sqrt(int x);
+#pragma endregion
 
+#pragma region 50 Pow(x, n)
+double myPow(double x, int n);
+#pragma endregion
 
+#pragma region 38. Count and Say
+string countAndSay(int n);
+#pragma endregion
 
+#pragma region 33. Search in Rotated Sorted Array
+int search(vector<int>& nums, int target);
+#pragma endregion
 
+#pragma region 34. Search for a Range
+vector<int> searchRange(vector<int>& nums, int target);
+#pragma endregion
 
+#pragma region 36. Valid Sudoku
+bool isValidSudoku(vector<vector<char>>& board);
+#pragma endregion
+
+#pragma region 10. Regular Expression Matching
+bool isMatch(string s, string p);
+bool isMatchdp(string s, string p);
+#pragma endregion
+
+#pragma region fb contiguous sum
+vector<int> consum(vector<int> nums, int target);
+#pragma endregion
+
+#pragma region 44. Wildcard Matching
+bool isMatchwl(string s, string p);
+//bool ismatchmain(string s, string p);
+#pragma endregion
 
 
 #endif

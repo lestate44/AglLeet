@@ -6,8 +6,19 @@
 #include <iomanip>
 #include <limits>
 #include <conio.h>
+#include <unordered_map>
 using namespace std;
-
+vector<int> kmpProcess(string& needle) {
+	int n = needle.length();
+	vector<int> lps(n, 0);
+	for (int i = 1, len = 0; i < n; ) {
+		if (needle[i] == needle[len])
+			lps[i++] = ++len;
+		else if (len) len = lps[len - 1];
+		else lps[i++] = 0;
+	}
+	return lps;
+}
 
 
 int main()
@@ -122,22 +133,66 @@ int main()
 	//re->display();
 
 	//22. Generate Parentheses
-	//vector<string> result = generateParenthesis(2);
-	//	for (auto i : result)
-	//		cout << i << " ";
+	//vector<string> result = generateParenthesis(3);
+		//for (auto i : result)
+		//	cout << i << " ";
 
+	//26. Remove Duplicates from Sorted Array
+	//vector<int> test{ 0,1,1,2,3,3,4,4,5 };
+	//cout<<removeDuplicates(test)<<endl;
+	//for (auto i : test)
+	//	cout << i << endl;
 
+	//29. Divide Two Integers
+	//int a = 2147483647, b = 1;
+	//cout << divide(a, b);
 
+	//69. Sqrt(x)
+	//cout << sqrt(1);
 
+	//50 Pow(x, n)
+	//cout << -4 % 2;
 
+	//38. Count and Say
+	//cout << countAndSay(4);
 
+	//33. Search in Rotated Sorted Array
+	//vector<int> s = { 4,5,6,7,0,1,2 };
+	//int target = 1;
+	//cout << search(s, target);
 
+	//34. Search for a Range
+	//vector<int> nums{ 5,7,7,8,8,10 };
+	//int target = 8;
+	//vector<int> result = searchRange(nums, target);
+	//cout << result[0] << "," << result[1];
 
+	//36. Valid Sudoku
+	//vector<vector<char>> s = {
+	//{'.', '.', '4', '.', '.', '.', '6', '3', '.'},
+	//{'.', '.', '.', '.', '.', '.', '.', '.', '.'}, 
+	//{'5', '.', '.', '.', '.', '.', '.', '9', '.'}, 
+	//{'.', '.', '.', '5', '6', '.', '.', '.', '.'}, 
+	//{'4', '.', '3', '.', '.', '.', '.', '.', '1'}, 
+	//{'.', '.', '.', '7', '.', '.', '.', '.', '.'}, 
+	//{'.', '.', '.', '5', '.', '.', '.', '.', '.'}, 
+	//{'.', '.', '.', '.', '.', '.', '.', '.', '.'}, 
+	//{'.', '.', '.', '.', '.', '.', '.', '.', '.'}};
 
+	//10. Regular Expression Matching
+	//cout << isMatchdp("aaa", "a*");
 
+	//fb contiguous sum
+	//vector<int> nums = {18,1,6,7,2 };
+	//int target = 9;
+	//vector<int> result = consum(nums, target);
+	//for (auto i : result)
+	//	cout << i << " ";
 
-
-
+	//44. Wildcard Matching
+	//string s = "abbaabbbbababaababababbabbbaaaabbbbaaabbbabaabbbbbabbbbabbabbaaabaaaabbbbbbaaabbabbbbababbbaaabbabbabb";
+	//string p = "***b**a*a*b***b*a*b*bbb**baa*bba**b**bb***b*a*aab*a**";
+	//cout << isMatchwl(s, p);
 
 
 
