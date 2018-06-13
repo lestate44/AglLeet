@@ -7,6 +7,7 @@
 #include <limits>
 #include <conio.h>
 #include <unordered_map>
+#include <algorithm>
 using namespace std;
 vector<int> kmpProcess(string& needle) {
 	int n = needle.length();
@@ -18,6 +19,11 @@ vector<int> kmpProcess(string& needle) {
 		else lps[i++] = 0;
 	}
 	return lps;
+}
+void ad(int& x)
+{
+	x = x + 1;
+	return;
 }
 
 
@@ -193,6 +199,60 @@ int main()
 	//string s = "abbaabbbbababaababababbabbbaaaabbbbaaabbbabaabbbbbabbbbabbabbaaabaaaabbbbbbaaabbabbbbababbbaaabbabbabb";
 	//string p = "***b**a*a*b***b*a*b*bbb**baa*bba**b**bb***b*a*aab*a**";
 	//cout << isMatchwl(s, p);
+
+	//41. First Missing Positive
+	//vector<int> nums{-5,-6,-8,2 };
+	//int s = firstMissingPositive(nums);
+	//cout << s;
+
+	//53. Maximum Subarray
+	//vector<int>  nums{ -2,1,-3,4,-1,2,1,-5,4 };
+	//cout << maxSubArray(nums);
+
+	//66. Plus One
+	//vector<int> s{ 1,9,9,9 };
+	//vector<int> result = plusOne(s);
+	//for (auto i : result)
+	//cout << i;
+
+	//287. Find the Duplicate Number
+	//vector<int> nums{ 2,2,1,3 };
+	//cout << findDuplicate(nums);
+
+	//268. Missing Number
+	//vector<int> nums{ 3,0,1 };
+	//cout << missingNumber(nums);
+
+	//136. Single Number
+	//vector<int> nums{ 2,2,3,4,4 };
+	//cout << singleNumber(nums);
+
+	// 48. Rotate Image
+	//vector<vector<int>> matrix = { {5,1,9,11},{2,4,8,10},{13,3,6,7},{15,14,12,16} };
+	//int n = matrix.size();
+	//rotate(matrix);
+	//for (int i = 0; i < n; i++)
+	//{
+	//	for (int j = 0; j < n; j++)
+	//	{
+	//		cout << matrix[i][j]<<" ";
+	//	}
+	//	cout << endl;
+	//}
+
+	// 49. Group Anagrams
+	//string s = "cba";
+	//sort(s.begin(), s.end());
+	//cout << s;
+
+	//438. Find All Anagrams in a String
+	//string s = "cbaebabacd", p = "abc";
+	//vector<int> result = findAnagrams(s, p);
+	//for (auto i : result)
+	//cout << i << endl;
+
+
+	// 46. Permutations
 
 
 

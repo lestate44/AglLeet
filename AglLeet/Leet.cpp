@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <exception>
+#include <set>
 
 using namespace std;
 
@@ -1280,5 +1281,385 @@ bool isMatchwl(string s, string p)
 	return j == n;
 }
 
+//bool isMatchwldp(string s, string p)
+//{
+//		int m = s.length(), n = p.length();
+//		bool f[m + 1][n + 1];
+//		memset(f, 0, sizeof(f));
+//		f[0][0] = 1;
+//		for (int i = 1; i <= n; i++) {
+//			f[0][i] = p[i - 1] == '*' && f[0][i - 1];
+//		}
+//		for (int i = 1; i <= m; i++) {
+//			for (int j = 1; j <= n; j++) {
+//				if (p[j - 1] != '*') {
+//					if (p[j - 1] == '?' || s[i - 1] == p[j - 1]) {
+//						f[i][j] = f[i - 1][j - 1];
+//					}
+//				}
+//				else {
+//					f[i][j] = (f[i][j - 1] || f[i - 1][j]);
+//				}
+//			}
+//		}
+//		return f[m][n];
+//
+//}
+
 #pragma endregion
 
+#pragma region 41. First Missing Positive
+int firstMissingPositive(vector<int>& nums)
+{
+	for (int i = 0; i<nums.size(); i++)
+	{
+		while (nums[i] <= nums.size() && nums[i] > 0 && nums[i] != nums[nums[i]-1])
+		{
+			swap(nums[i], nums[nums[i] - 1]);
+		}
+	}
+	for (int j = 0; j<nums.size(); j++)
+	{
+		if (nums[j] != j+1)
+			return j + 1;
+	}
+	return nums.size() + 1;
+}
+#pragma endregion
+
+#pragma region 53. Maximum Subarray
+int maxSubArray(vector<int>& nums)
+{
+	int sum = nums[0], end = 0, max = nums[0];
+	for (int i = 1; i<nums.size(); i++)
+	{
+		if (nums[i]>sum&&sum<0)
+		{
+			end = i;
+			sum = nums[i];
+		}
+		else if (sum + nums[i]>0)
+		{
+			if (i == end + 1)
+			{
+				sum += nums[i];
+				end = i;
+			}
+			else
+			{
+				sum = nums[i];
+				end = i;
+			}
+		}
+		if (sum>max)
+			max = sum;
+	}
+	return max;
+}
+#pragma endregion
+
+#pragma region 66. Plus One
+vector<int> plusOne(vector<int>& digits)
+{
+	for (int i = digits.size() - 1; i >= 0; i--)
+	{
+		if (digits[i] != 9)
+		{
+			digits[i]++;
+			return digits;
+		}
+		else if (digits[i]==9&&i==0)
+		{
+			digits[i] = 0;
+			digits.insert(digits.begin(), 1);
+			return digits;
+		}
+		else
+		{
+			digits[i] = 0;
+		}
+
+	}
+
+}
+#pragma endregion
+
+#pragma region 287. Find the Duplicate Number
+int findDuplicate(vector<int>& nums)
+{
+	int low = 0, high = nums.size(), mid;
+	while (low<high)
+	{
+		int count = 0;
+		mid = (low + high) / 2;
+		for (auto i : nums)
+		{
+			if (i <= mid)
+				count++;
+		}
+		if (count>mid)
+			high = mid;
+		else
+			low = mid + 1;
+	}
+	return low;
+}
+#pragma endregion
+
+#pragma region 268. Missing Number
+int missingNumber(vector<int>& nums)
+{
+	for (int i = 0; i<nums.size(); i++)
+	{
+		while (nums[i] < nums.size() && nums[i] != nums[nums[i]])
+		{
+			swap(nums[i], nums[nums[i]]);
+		}
+
+	}
+	for (int j = 0; j<nums.size(); j++)
+	{
+		if (nums[j] != j)
+			return j;
+	}
+	return nums.size();
+}
+#pragma endregion
+
+#pragma region 136. Single Number
+int singleNumber(vector<int>& nums)
+{
+	int result = 0;
+	for (int i = 0; i<nums.size(); i++)
+		result ^= nums[i];
+	return result;
+}
+#pragma endregion
+
+#pragma region 141. Linked List Cycle
+bool hasCycle(ListNode *head)
+{
+	set<ListNode*> nodes;
+	while (head)
+	{
+		if (nodes.find(head) != nodes.end())
+			return true;
+		else
+			nodes.insert(head);
+		head = head->next;
+	}
+	return false;
+}
+bool hasCycleOn(ListNode *head) {
+	if (head == NULL || head->next == NULL) {
+		return false;
+	}
+	ListNode* fast = head->next;
+	ListNode* slow = head;
+	while (fast != slow)
+	{
+		if (fast == NULL || fast->next == NULL)
+			return false;
+		slow = slow->next;
+		fast = fast->next->next;
+	}
+	return true;
+
+}
+#pragma endregion
+
+#pragma region 142. Linked List Cycle II
+ListNode *detectCycle(ListNode *head) {
+	if (head == NULL || head->next == NULL) {
+		return NULL;
+	}
+	ListNode* slow = head;
+	ListNode* fast = head;
+	while (true)
+	{
+		if (fast == NULL || fast->next == NULL)
+			return NULL;
+		slow = slow->next;
+		fast = fast->next->next;
+		if (slow == fast)
+			break;
+	}
+	fast = head;
+	while (slow != head)
+	{
+		slow = slow->next;
+		head = head->next;
+	}
+	return head;
+
+
+}
+#pragma endregion
+
+#pragma region 48. Rotate Image
+void rotate(vector<vector<int>>& matrix)
+{
+	int n = matrix.size();
+	if (n == 0 || n == 1)
+		return;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = i; j < n; j++)
+		{	
+
+				int temp = matrix[i][j];
+				matrix[i][j] = matrix[j][i];
+				matrix[j][i] = temp;
+		}
+	}
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n / 2; j++)
+		{
+			int temp = matrix[i][j];
+			matrix[i][j] = matrix[i][n - j - 1];
+			matrix[i][n - j - 1] = temp;
+		}
+	}
+	return;
+}
+#pragma endregion
+
+#pragma region 55. Jump Game
+bool canJump(vector<int>& nums)
+{	
+	int n = nums.size();
+	if (n == 0)return true;
+	vector<bool> reach(n, 0);
+	reach[0] = 1;
+	for (int i = 0; i < n; i++)
+	{
+		if (reach[n - 1] == 1)
+			return true;
+		if (reach[i] ==1)
+		{
+			for (int j = 1; j <= nums[i] && j + i < n; j++)
+			{
+				reach[j + i] = 1;
+			}
+		}
+
+	}
+	return reach[n-1];
+}
+//greedy
+bool canJumpdp(vector<int>& nums)
+{
+	int last = nums.size() - 1;
+	for (int i = last; i >= 0; i--)
+	{
+		if (i + nums[i] >= last)
+			last = i;
+	}
+	return last == 0;
+}
+#pragma endregion
+
+#pragma region 70. Climbing Stairs
+int climbStairs(int n)
+{
+	if (n == 0)
+		return 0;
+	if (n == 1)
+		return 1;
+	if (n == 2)
+		return 2;
+	int i1 = 1, i2 = 2, result = 0;
+	for (int i = 3; i <= n; i++)
+	{
+		int temp = i1;
+		result = i1 + i2;
+		i1 = i2;
+		i2 = result;
+
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 49. Group Anagrams
+vector<vector<string>> groupAnagrams(vector<string>& strs)
+{
+	vector<vector<string>> result;
+	unordered_map<string, multiset<string>> hash;
+	for (auto s : strs)
+	{
+		string t = s;
+		sort(t.begin(), t.end());
+		hash[t].insert(s);
+	}
+	for (auto h : hash)
+	{
+		vector<string> element(h.second.begin(), h.second.end());
+		result.push_back(element);
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 242. Valid Anagram
+bool isAnagram(string s, string t)
+{
+	sort(s.begin(), s.end());
+	sort(t.begin(), t.end());
+	return s == t;
+}
+bool isAnagramHash(string s, string t)
+{
+	unordered_map<char, int> hash;
+	if (s.size() != t.size()) return false;
+	for (int i = 0; i<s.size(); i++)
+	{
+		hash[s[i]]++;
+		hash[t[i]]--;
+	}
+	for (auto i : hash)
+	{
+		if (i.second) return false;
+	}
+	return true;
+}
+#pragma endregion
+
+#pragma region 438. Find All Anagrams in a String
+vector<int> findAnagrams(string s, string p)
+{
+	vector<int> result;
+	int m = s.size(), n = p.size();
+	vector<int> ph(26, 0), sh(26, 0);
+	for (int pi = 0; pi<n; pi++)
+	{
+		ph[p[pi] - 'a']++;
+		sh[s[pi] - 'a']++;
+	}
+	if (ph == sh)result.push_back(0);
+	for (int i = n; i <= m; i++)
+	{
+		++sh[s[i] - 'a'];
+		--sh[s[i - n] - 'a'];
+		if (sh == ph)
+			result.push_back(i - n + 1);
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 104. Maximum Depth of Binary Tree
+int maxDepth(TreeNode* root)
+{
+	if (!root)return 0;
+	return 1 + max(maxDepth(root->left), maxDepth(root->right));
+}
+#pragma endregion
+
+#pragma region 46. Permutations
+//vector<vector<int>> permute(vector<int>& nums)
+//{
+//
+//}
+#pragma endregion

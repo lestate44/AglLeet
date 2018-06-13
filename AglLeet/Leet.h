@@ -25,6 +25,15 @@ struct ListNode
 };
 #pragma endregion
 
+#pragma region TreeNode
+struct TreeNode {
+	int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+#pragma endregion
+
 #pragma region 1 Two Sum
 vector<int> twosum(vector<int>& nums, int target);
 vector<int> twosummap(vector<int>& nums, int target);
@@ -157,8 +166,91 @@ vector<int> consum(vector<int> nums, int target);
 
 #pragma region 44. Wildcard Matching
 bool isMatchwl(string s, string p);
+bool isMatchwldp(string s, string p);
 //bool ismatchmain(string s, string p);
 #pragma endregion
+
+#pragma region 41. First Missing Positive
+int firstMissingPositive(vector<int>& nums);
+#pragma endregion
+
+#pragma region 53. Maximum Subarray
+int maxSubArray(vector<int>& nums);
+#pragma endregion
+
+#pragma region 66. Plus One
+vector<int> plusOne(vector<int>& digits);
+#pragma endregion
+
+#pragma region 287. Find the Duplicate Number
+int findDuplicate(vector<int>& nums);
+#pragma endregion
+
+#pragma region 268. Missing Number
+int missingNumber(vector<int>& nums);
+#pragma endregion
+
+#pragma region 136. Single Number
+int singleNumber(vector<int>& nums);
+#pragma endregion
+
+#pragma region 141. Linked List Cycle
+bool hasCycle(ListNode *head);
+bool hasCycleOn(ListNode *head);
+#pragma endregion
+
+#pragma region 142. Linked List Cycle II
+ListNode *detectCycle(ListNode *head);
+#pragma endregion
+
+#pragma region 48. Rotate Image
+void rotate(vector<vector<int>>& matrix);
+#pragma endregion
+
+#pragma region 55. Jump Game
+bool canJump(vector<int>& nums);
+bool canJumpdp(vector<int>& nums);
+#pragma endregion
+
+#pragma region 70. Climbing Stairs
+int climbStairs(int n);
+#pragma endregion
+
+#pragma region 49. Group Anagrams
+vector<vector<string>> groupAnagrams(vector<string>& strs);
+#pragma endregion
+
+#pragma region 242. Valid Anagram
+bool isAnagram(string s, string t);
+bool isAnagramHash(string s, string t);
+#pragma endregion
+
+#pragma region 438. Find All Anagrams in a String
+vector<int> findAnagrams(string s, string p);
+#pragma endregion
+
+#pragma region 104. Maximum Depth of Binary Tree
+int maxDepth(TreeNode* root);
+#pragma endregion
+
+
+
+
+#pragma region 46. Permutations
+vector<vector<int>> permute(vector<int>& nums);
+#pragma endregion
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #endif
