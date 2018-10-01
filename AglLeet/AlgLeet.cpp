@@ -29,8 +29,8 @@ void ad(int& x)
 
 int main()
 {
-	cout.precision(4);
-	cout << fixed;
+	//cout.precision(4);
+	//cout << fixed;
 
 	//class test
 	//cout << test().plus();
@@ -251,10 +251,119 @@ int main()
 	//for (auto i : result)
 	//cout << i << endl;
 
+	//DP Gold
+	//vector<int> g = { 400,500,200,300,250 };
+	//vector<int> p = { 5,5,3,4,3 };
+	//int n = 5;
+	//int w = 10;
+	//int z = getMostGoldIt(n, w, g, p);
+	//int k = getMostGoldDP(n, w, g, p);
+	//cout << z<<"sss"<<k;
+	
+	//Serling Cut DP
+	//vector<int> length{ 1,2,3,4,5,6,7,8,9,10 };
+	//vector<int> price{ 1,5,8,9,10,17,17,20,24,30 };
+	//int re = cutdp(price, 5);
+	//cout << re;
+
+	//56. Merge Intervals
+	//Interval a(1, 4), b(1, 5), c(8, 10), d(15, 18);
+	//vector<Interval> intervals{ a,b };
+	//intervalsort(intervals,0,3);
+	//for (auto i : intervals)
+	//	cout << i.start << endl;
+	//vector<Interval> result = merge(intervals);
+	//cout << result[0].end;
+	
+	// 88. Merge Sorted Array
+	//vector<int> nums1{1};
+	//int m = 1, n = 0;
+	//vector<int> nums2{};
+	//merge(nums1, m, nums2, n);
+
+	//79. Word Search
+	//vector<vector<char>> board{ {'A','B','C','E'},{'S','F','C','S'},{'A','D','E','E'} };
+	//string word{ "ABCCED" };
+	//cout << exist(board, word);
+
+	//78. Subsets
+	//vector<int> nums{ 1,2,3,4 };
+	//vector<vector<int>> result = subsetsbck(nums);
+	//for (int i = 0; i < result.size(); i++)
+	//{
+	//	for (auto j : result[i])
+	//		cout << j<<" ";
+	//	cout << endl;
+	//}
+
+	//90. Subsets II
+	//vector<int> nums{ 1,2,2,3,4 };
+	//vector<vector<int>> result = subsetsWithDup(nums);
+	//for (int i = 0; i < result.size(); i++)
+	//{
+	//	for (auto j : result[i])
+	//		cout << j<<" ";
+	//	cout << endl;
+	//}
 
 	// 46. Permutations
+	//vector<int> nums{ 4,3,2,1 };
+	//vector<vector<int>> result = permute(nums);
+	//for (int i = 0; i < result.size(); i++)
+	//{
+	//	for (auto j : result[i])
+	//		cout << j << " ";
+	//	cout << endl;
+	//}
 
+	//47. Permutations II
+	//vector<int> nums{ 1,2,2,3 };
+	//vector<vector<int>> result = permuteUnique(nums);
+	//for (int i = 0; i < result.size(); i++)
+	//{
+	//	for (auto j : result[i])
+	//		cout << j << " ";
+	//	cout << endl;
+	//}
 
+	//62. Unique Paths
+	//cout << uniquePaths(10, 10);
+
+	//31. Next Permutation
+	//vector<int> ts{ 1,2,6,5,4,3};
+	//nextPermutation(ts);
+	//for (auto i : ts)
+	//	cout << i << endl;
+
+	//39. Combination Sum
+	//vector<int> candidate{ 2,3,5 };
+	//int target = 8;
+	//vector<vector<int>> result = combinationSum(candidate, target);
+	//cout << result.size()<<endl;
+	//for (auto i : result)
+	//{
+	//	for (auto j : i)
+	//		cout << j << ",";
+	//	cout << endl;
+	//}
+
+	//91. Decode Ways
+	//string a = "101";
+	//cout << numDecodings(a);
+
+	//121. Best Time to Buy and Sell Stock
+	//vector<int> stock{ 5,3,5,67,7 };
+	//cout << maxProfit(stock);
+
+	//122. Best Time to Buy and Sell Stock II
+	//vector<int> stock{ 7,1,5,3,6,4 };
+	//cout << maxProfitII(stock);
+
+	//127. Word Ladder
+	string be = "hit", ed = "cog";
+	vector<string> wl{ "hot","dot","dog","lot","log","cog" };
+	cout << ladderLength(be, ed, wl) << endl;
+	cout << wl.size();
 
 
 

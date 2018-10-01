@@ -1,36 +1,58 @@
-﻿  AlgLeet.cpp
-  Leet.cpp
-d:\github\algleet\aglleet\aglleet\leet.cpp(190): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(200): warning C4018: '>=': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(215): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(309): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(313): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(319): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(354): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(372): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(480): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(485): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(513): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(515): warning C4018: '>=': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(595): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(619): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(682): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(796): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(835): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(865): warning C4244: '+=': conversion from '__int64' to 'int', possible loss of data
-d:\github\algleet\aglleet\aglleet\leet.cpp(954): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(956): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(1172): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(1314): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(1316): warning C4018: '<=': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(1321): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(1334): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(1412): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(1414): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(1420): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(1433): warning C4018: '<': signed/unsigned mismatch
-d:\github\algleet\aglleet\aglleet\leet.cpp(1616): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-d:\github\algleet\aglleet\aglleet\leet.cpp(69): warning C4715: 'twosummap': not all control paths return a value
-d:\github\algleet\aglleet\aglleet\leet.cpp(1384): warning C4715: 'plusOne': not all control paths return a value
+﻿  Leet.cpp
+d:\github\algleet\aglleet\aglleet\leet.cpp(193): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(203): warning C4018: '>=': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(218): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(312): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(316): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(322): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(357): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(375): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(483): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(488): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(516): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(518): warning C4018: '>=': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(598): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(622): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(685): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(799): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(838): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(868): warning C4244: '+=': conversion from '__int64' to 'int', possible loss of data
+d:\github\algleet\aglleet\aglleet\leet.cpp(957): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(959): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1175): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1317): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1319): warning C4018: '<=': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1324): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1337): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1415): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1417): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1423): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1436): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1619): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1783): warning C4018: '<=': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1786): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1866): warning C4018: '>=': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1881): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1883): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1895): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1910): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1935): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1965): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1988): warning C4018: '>=': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(1992): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(2016): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(2067): warning C4244: 'return': conversion from '__int64' to 'int', possible loss of data
+d:\github\algleet\aglleet\aglleet\leet.cpp(2049): warning C4101: 'z': unreferenced local variable
+d:\github\algleet\aglleet\aglleet\leet.cpp(2049): warning C4101: 'd': unreferenced local variable
+d:\github\algleet\aglleet\aglleet\leet.cpp(2078): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(2165): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(2248): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(2264): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(2282): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(2379): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(2399): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(2456): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(2482): warning C4018: '>': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(72): warning C4715: 'twosummap': not all control paths return a value
+d:\github\algleet\aglleet\aglleet\leet.cpp(1387): warning C4715: 'plusOne': not all control paths return a value
   AglLeet.vcxproj -> D:\GitHub\AlgLeet\AglLeet\Debug\AglLeet.exe

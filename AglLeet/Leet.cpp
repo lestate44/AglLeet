@@ -9,6 +9,9 @@
 #include <iomanip>
 #include <exception>
 #include <set>
+#include <stack>
+#include <queue>
+#include <unordered_set>
 
 using namespace std;
 
@@ -1657,9 +1660,868 @@ int maxDepth(TreeNode* root)
 }
 #pragma endregion
 
-#pragma region 46. Permutations
-//vector<vector<int>> permute(vector<int>& nums)
-//{
-//
-//}
+#pragma region DP Gold
+int getMostGoldIt(int n, int w, vector<int> g, vector<int> p)
+{	
+	int s = g.size();
+	if (n > s)
+	{
+		cout << "larger";
+		return 0;
+	}
+
+	if (n <= 1 && w < p[0])
+		return 0;
+	if (n == 1 && w >= p[0])
+		return g[0];
+	if (n > 1 && w < p[n - 1])
+		return getMostGoldDP(n - 1, w, g, p);
+	int a = getMostGoldDP(n - 1, w, g, p);
+	int b = getMostGoldDP(n - 1, w - p[n - 1], g, p) + g[n - 1];
+	return max(a, b);
+}
+int getMostGoldDP(int n, int w, vector<int> g, vector<int> p)
+{
+	vector<int> result(w+1);
+	vector<int> pre(w+1);
+	for (int i = 0; i <w+1; i++)
+	{
+		if (i < p[0])
+			pre[i] = 0;
+		else
+			pre[i] = g[0];
+	}
+	for (int i = 1; i < n; i++)
+	{
+		for (int j = 0; j < w+1; j++)
+		{
+			if (j < p[i])
+				result[j] = pre[j];
+			else
+				result[j] = max(pre[j], pre[j - p[i]] + g[i]);
+		}
+		pre = result;
+	}
+
+	return result[w];
+
+}
 #pragma endregion
+
+#pragma region Serling Cut DP
+int cutrecu(vector<int> len, vector<int> price, int l)
+{
+	if (l == 0)
+		return 0;
+	int q = 0;
+	for (int i = 1; i <=l; i++)
+	{
+		q = max(q, price[i-1]+cutrecu(len,price,l-len[i-1]));
+	}
+	return q;
+
+}
+int cutrecusive(vector<int> price, int n)
+{
+	if (n == 0)
+		return 0;
+	int q = -1;
+	for (int i = 1; i <= n; i++)
+	{
+		q = max(q, price[i - 1] + cutrecusive(price, n - i));
+	}
+	return q;
+}
+int cutdp(vector<int> price, int n)
+{
+	vector<int> r(n + 1, 0);
+	r[0] = 0;
+	for (int i = 1; i <= n; ++i)
+	{
+		int q = -1;
+		for (int j = 1; j <= i; ++j)
+		{
+			q = max(q, price[j - 1] + r[i - j]);
+		}
+		r[i] = q;
+	}
+	return r[n];
+
+}
+#pragma endregion
+
+#pragma region 56. Merge Intervals
+void intervalsort(vector<Interval>& intervals, int start, int end)
+{
+	if (start >= end)
+		return;
+	int key = intervals[end].start;
+	int left = start, right = end - 1;
+	while (left < right)
+	{
+		while (intervals[left].start < key&&left < right)
+			left++;
+		while (intervals[right].start >= key && left < right)
+			right--;
+		swap(intervals[left], intervals[right]);
+	}
+	if (intervals[left].start >= intervals[end].start)
+		swap(intervals[left], intervals[end]);
+	else
+		left++;
+	intervalsort(intervals, start, left - 1);
+	intervalsort(intervals, left + 1, end);
+
+
+}
+vector<Interval> merge(vector<Interval>& intervals)
+{
+	vector<Interval> result;
+	if (intervals.size() == 0)
+		return result;
+	intervalsort(intervals, 0, intervals.size() - 1);
+	for (int i = 0; i <= intervals.size()-1;)
+	{
+		Interval temp = intervals[i];
+		for (int j = i + 1; j < intervals.size() && intervals[j].start <= temp.end; j++)
+		{
+			temp.end = max(temp.end,intervals[j].end);
+			i = j;
+		}
+		result.push_back(temp);
+		i++;
+	}
+	return result;
+}
+
+#pragma endregion
+
+#pragma region 88. Merge Sorted Array
+void merge(vector<int>& nums1, int m, vector<int>& nums2, int n)
+{
+	for (int i = m+n-1; i >= n; i--)
+		nums1[i] = nums1[i - n];
+	int i = n, j = 0, k = 0;
+	while (i < m + n && j < n)
+	{
+		if (nums1[i] < nums2[j])
+			nums1[k++] = nums1[i++];
+		else
+			nums1[k++] = nums2[j++];
+	}
+	while (i < m + n)
+	{
+		nums1[k++] = nums1[i++];
+	}
+	while (j < n)
+	{
+		nums1[k++] = nums2[j++];
+	}
+
+
+	//for (int i = n, j = 0,k=0; k<m+n;k++)
+	//{	
+	//	if (i == m + n)
+	//	{
+	//		nums1[k] = nums2[j];
+	//		j++;
+	//		continue;
+	//	}
+	//	if (j == n)
+	//	{
+	//		break;
+	//	}
+	//	if (nums1[i] < nums2[j])
+	//	{
+	//		nums1[k] = nums1[i];
+	//		i++;
+	//	}
+	//	else
+	//	{
+	//		nums1[k] = nums2[j];
+	//		j++;
+	//	}
+	//}
+}
+#pragma endregion
+
+#pragma region 75. Sort Colors
+void sortcolors(vector<int>& nums)
+{
+	int i = 0, j = 0, k = nums.size() - 1;
+	for (;i <= k; i++)
+	{
+		if (nums[i] == 0)
+			swap(nums[i], nums[j++]);
+		else if (nums[i] == 2)
+			swap(nums[i--], nums[k--]);
+	}
+}
+#pragma endregion
+
+#pragma region 79. Word Search
+bool verify(vector<vector<char>>&board, string word, int i, int j, int index)
+{
+	if (index == word.size()) return true;
+	if (i >= board.size() || i < 0 || j >= board[i].size() || j < 0) return false;
+	if (board[i][j] != word[index]) return false;
+	board[i][j] = '$';
+	bool next = (
+		verify(board, word, i, j + 1, index + 1) || 
+		verify(board, word, i, j - 1, index + 1) || 
+		verify(board, word, i + 1, j, index + 1) ||
+		verify(board, word, i - 1, j, index + 1)
+		);
+	board[i][j] = word[index];
+	return next;
+
+}
+bool exist(vector<vector<char>>& board, string word)
+{
+	for (int i = 0; i < board.size(); i++)
+	{
+		for (int j = 0; j < board[i].size(); j++)
+			if (verify(board, word, i, j, 0))
+				return true;
+	}
+	return false;
+}
+#pragma endregion
+
+#pragma region 78. Subsets
+vector<vector<int>> subsets(vector<int>& nums)
+{
+	vector<vector<int>> result{ {} };
+	for (int i = 0; i < nums.size(); i++)
+	{
+		int n = result.size();
+		for (int j = 0; j < n; j++)
+		{
+			result.push_back(result[j]);
+			result.back().push_back(nums[i]);
+		}
+	}
+	return result;
+}
+
+void backtrackss(vector<int>& nums, vector<vector<int>>& result, vector<int>& elem, int index)
+{
+	result.push_back(elem);
+	for (int i = index; i < nums.size(); i++)
+	{
+		elem.push_back(nums[i]);
+		backtrackss(nums, result, elem, i + 1);
+		elem.pop_back();
+	}
+
+}
+
+vector<vector<int>> subsetsbck(vector<int>& nums)
+{
+	vector<vector<int>> result;
+	if (nums.empty())
+		return result;
+	vector<int> elem;
+	backtrackss(nums, result, elem, 0);
+	return result;
+}
+
+#pragma endregion
+
+#pragma region 90. Subsets II
+void subsetbckdup(vector<vector<int>>& result, vector<int>& nums, vector<int>& temp, int index)
+{
+	result.push_back(temp);
+	for (int i = index; i < nums.size(); i++)
+	{
+		if (i != index && nums[i] == nums[i - 1])
+			continue;
+		temp.push_back(nums[i]);
+		subsetbckdup(result, nums, temp, i + 1);
+		temp.pop_back();
+	}
+}
+vector<vector<int>> subsetsWithDup(vector<int>& nums)
+{
+	vector<vector<int>> result;
+	if (nums.empty())
+		return result;
+	sort(nums.begin(), nums.end());
+	vector<int> temp;
+	subsetbckdup(result, nums, temp, 0);
+	return result;
+
+}
+#pragma endregion
+
+#pragma region 46. Permutations
+void permutebk(vector<vector<int>>& result, vector<int>& nums, vector<int>& temp)
+{
+	if (temp.size() == nums.size())
+	{
+		result.push_back(temp);
+		return;
+	}
+	for (int i = 0; i < nums.size(); ++i)
+	{
+		auto pos = find(temp.begin(), temp.end(), nums[i]);
+		if (pos == temp.end())
+		{
+			temp.push_back(nums[i]);
+			permutebk(result, nums, temp);
+			temp.pop_back();
+		}
+	}
+}
+
+vector<vector<int>> permute(vector<int>& nums)
+{
+	vector<vector<int>> result;
+	sort(nums.begin(), nums.end());
+	vector<int> temp;
+	permutebk(result, nums, temp);
+	return result;
+}
+
+void permuteswapbk(vector<int>& nums, int index, vector<vector<int>>& result)
+{
+	if (index >= nums.size())
+		result.push_back(nums);
+	else
+	{
+		for (int i = index; i < nums.size(); i++)
+		{
+			swap(nums[index], nums[i]);
+			permuteswapbk(nums, index + 1, result);
+			swap(nums[index], nums[i]);
+		}
+	}
+
+}
+vector<vector<int>> permuteswap(vector<int>& nums)
+{
+	vector<vector<int>> result;
+	permuteswapbk(nums, 0, result);
+	return result;
+}
+#pragma endregion
+
+#pragma region 47. Permutations II
+void permutunbck(vector<int>& nums, vector<vector<int>>& result, vector<int>& temp, vector<bool>& used)
+{
+	if (temp.size() == nums.size())
+		result.push_back(temp);
+	else
+	{
+		for (int i = 0; i < nums.size(); ++i)
+		{
+			if (used[i] || i > 0 && nums[i] == nums[i - 1] && !used[i - 1])
+				continue;
+			used[i] = 1;
+			temp.push_back(nums[i]);
+			permutunbck(nums, result, temp, used);
+			used[i] = 0;
+			temp.pop_back();
+		}
+	}
+}
+vector<vector<int>> permuteUnique(vector<int>& nums)
+{
+	vector<vector<int>> result;
+	if (nums.empty())
+		return result;
+	vector<int> temp;
+	vector<bool> used(nums.size(), 0);
+	sort(nums.begin(), nums.end());
+	permutunbck(nums, result, temp, used);
+	return result;
+
+}
+#pragma endregion
+
+#pragma region 62. Unique Paths
+int uniquePaths(int m, int n)
+{	
+	if (m == 0 || n == 0 )
+		return 0;
+	if (m == 1 || n == 1 || m == 1 && n == 1)
+		return 1;
+	int d, z;
+	long a = max(m-1, n-1);
+	long b = min(m-1, n-1);
+	int ac = a, bc = b;
+	long long t = a + b, tc = a + b;
+	while (tc > a+1)
+	{
+		cout << t << "," << tc << endl;
+		t = t * (tc - 1);
+		tc -= 1;
+	}
+	while (bc > 1)
+	{
+		cout << b << endl;
+		b = b * (bc - 1);
+		bc -= 1;
+	}
+	cout << t << "," << b << endl;
+	return t / b;
+}
+#pragma endregion
+
+#pragma region 31. Next Permutation
+void nextPermutation1(vector<int>& nums)
+{
+	for (int i = nums.size() - 1; i > 0; i--)
+	{
+		if (nums[i] > nums[i - 1])
+		{
+			for (int j = i; j < nums.size(); j++)
+			{
+				if (j == nums.size() - 1|| nums[j] > nums[i - 1] && nums[j + 1] <= nums[i - 1])
+				{
+					int a = nums[i - 1];
+					nums[i - 1] = nums[j];
+					nums[j] = a;
+					sort(nums.begin() + i, nums.end());
+					return;
+				}
+					
+			}
+		}
+	}
+	sort(nums.begin(), nums.end());
+}
+void nextPermutation(vector<int>& nums) {
+	int i = nums.size() - 1, k = i;
+	while (i > 0 && nums[i - 1] >= nums[i])
+		i--;
+	for (int j = i; j<k; j++, k--)
+		swap(nums[j], nums[k]);
+	if (i > 0) {
+		k = i--;
+		while (nums[k] <= nums[i])
+			k++;
+		swap(nums[i], nums[k]);
+	}
+}
+#pragma endregion
+
+#pragma region 94. Binary Tree Inorder Traversal
+vector<int> inorderTraversal(TreeNode* root) {
+	vector<int> result;
+	recur(root, result);
+	return result;
+}
+void recur(TreeNode* root, vector<int>& result)
+{
+	if (root != NULL)
+	{
+		recur(root->left, result);
+		result.push_back(root->val);
+		recur(root->right, result);
+	}
+}
+
+void inter(TreeNode* root, vector<int>& result)
+{
+	stack<TreeNode*> st;
+	while (root != NULL || !st.empty())
+	{
+		while (root != NULL)
+		{
+			st.push(root);
+			root = root->left;
+		}
+
+		if (!st.empty())
+		{
+			TreeNode* temp = st.top();
+			result.push_back(temp->val);
+			root = temp->right;
+			st.pop();
+		}
+	}
+}
+
+#pragma endregion
+
+#pragma region 39. Combination Sum
+vector<vector<int>> combinationSum(vector<int>& candidates, int target)
+{
+	sort(candidates.begin(), candidates.end());
+	vector<vector<int>> result;
+	vector<int> temp;
+	combin(candidates, result, temp, target,0);
+	return result;
+
+}
+void combin(vector<int>& candidates, vector<vector<int>>& result, vector<int>& temp, int target,int begin)
+{
+	if (target == 0)
+	{
+		result.push_back(temp);
+		return;
+	}
+	for (int i = begin/*avoid duplicate*/; i < candidates.size(); ++i)
+	{
+		if (target >= candidates[i])
+		{
+			temp.push_back(candidates[i]);
+			combin(candidates, result, temp, target - candidates[i],i);
+			temp.pop_back();
+		}
+		else
+			return;
+	}
+}
+#pragma endregion
+
+#pragma region 91. Decode Ways
+int numDecodings(string s)
+{	
+	int len = s.size();
+	if (len == 0 || s[0] == '0') return 0;
+	if (len == 1) return 1;
+	int temp = 0, f1 = 1, f2 = 1;
+	for (int i = 1; i < len; ++i)
+	{
+
+		//if (s[i] != '0'&&sti(s.substr(i - 1, 2)) < 27 && s[i - 1] != '0')
+		//	temp += f1 + f2;
+		//if (s[i] == '0' && sti(s.substr(i - 1, 2)) < 27 && s[i - 1] != '0')
+		//	temp += f2;
+		//if (s[i] != '0'&&(sti(s.substr(i - 1, 2)) > 26|| s[i - 1] == '0'))
+		//	temp += f1;
+		//if (s[i] == '0'&&(sti(s.substr(i - 1, 2)) > 26 || sti(s.substr(i - 1, 2)) == 0))
+		//	return 0;
+		if (s[i] != '0')
+			temp += f1;
+		if (sti(s.substr(i - 1, 2)) < 27 && sti(s.substr(i - 1, 2)) > 9)
+			temp += f2;
+		int t = f1;
+		f1 = temp;
+		f2 = t;
+		temp = 0;
+	}
+	return f1;
+}
+void numd(string s, int& result)
+{	
+	int len = s.size();
+	if (len<=2)
+	{
+		if (len == 1 && sti(s) != 0)
+		{
+			result++;
+		}
+		if (len == 2)
+		{
+			if (sti(s) >= 10)
+			{
+				if (sti(s) < 27)
+					sti(s.substr(1, 1)) > 0 ? result += 2 : result++;
+				else
+				{
+					if(sti(s.substr(1, 1)) > 0 )
+						result++;
+				}
+			}			
+		}
+		return;
+	}
+	if (sti(s.substr(0, 2)) < 27 && sti(s.substr(0,1))>0)
+	{
+		numd(s.substr(2, s.size() - 2), result);
+	}
+	if (sti(s.substr(0, 1)) > 0)
+	{
+		numd(s.substr(1, s.size() - 1), result);
+	}
+}
+string its(int i)
+{
+	return string(1,char(i + 64));
+}
+int sti(string s) 
+{
+	int i=0,r = 0;
+	while (i<s.size())
+	{
+		r = r * 10 + (s[i] - '0');
+		i++;
+	}
+	return r;
+}
+#pragma endregion
+
+#pragma region 121. Best Time to Buy and Sell Stock
+int maxProfit(vector<int>& prices)
+{
+	int result = 0;
+	if (prices.size()<2)
+		return result;
+	int min = prices[0];
+	for (int i = 1; i<prices.size(); ++i)
+	{
+		if (prices[i]>min&&prices[i] - min>result)
+			result = prices[i] - min;
+		if (prices[i]<min)
+			min = prices[i];
+
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 122. Best Time to Buy and Sell Stock II
+int maxProfitII(vector<int>& prices)
+{
+	if (prices.size() == 0)
+		return 0;
+	int result = 0;// , min = prices[0], pre = prices[0];
+	for (int i = 1; i < prices.size(); i++)
+	{
+		//if (prices[i] < pre)
+		//{
+		//	result += pre - min;
+		//	min = prices[i];
+		//}
+		//else if (i == prices.size() - 1 && prices[i] >= pre)
+		//	result += prices[i] - min;
+		//
+		//pre = prices[i];
+		result += prices[i] - prices[i - 1] > 0 ? prices[i] - prices[i - 1] : 0;
+	}
+
+	return result;
+
+}
+#pragma endregion
+
+#pragma region 102. Binary Tree Level Order Traversal
+vector<vector<int>> levelOrder(TreeNode* root)
+{
+	vector<vector<int>> result;
+	if (root == NULL)
+		return result;
+	vector<int> single;
+	int psize = 1, csize = 0;
+	TreeNode* temp = NULL;
+	queue<TreeNode* > q;
+	q.push(root);
+	while (!q.empty())
+	{
+		temp = q.front();
+		single.push_back(temp->val);
+		q.pop();
+		if (temp->left != NULL)
+		{
+			q.push(temp->left);
+			csize++;
+		}
+		if (temp->right != NULL)
+		{
+			q.push(temp->right);
+			csize++;
+		}
+		psize--;
+		if (psize == 0)
+		{
+			result.push_back(single);
+			single.clear();
+			psize = csize;
+			csize = 0;
+		}
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 103. Binary Tree Zigzag Level Order Traversal
+vector<vector<int>> zigzagLevelOrder(TreeNode* root)
+{
+	vector<vector<int>> result;
+	if (root == NULL)
+		return result;
+	queue<TreeNode*> q;
+	q.push(root);
+	bool ltr = true;
+
+	while (!q.empty())
+	{
+		int size = q.size();
+		vector<int> r(size);
+		for (int i = 0; i < size; i++)
+		{
+			TreeNode* node = q.front();
+			q.pop();
+			int index = ltr ? i : (size - 1 - i);
+			r[index] = node->val;
+			if (node->left)
+				q.push(node->left);
+			if (node->right)
+				q.push(node->right);
+		}
+		ltr = !ltr;
+		result.push_back(r);
+	}
+	return result;
+
+}
+#pragma endregion
+
+#pragma region 127. Word Ladder
+bool compare(string a, string b)
+{
+	if (a.size() != b.size())
+		return false;
+	int diff = 0;
+	for (int i = 0; i < a.size(); i++)
+	{
+		if (a[i] != b[i])
+			diff++;
+		if (diff > 1)
+			return false;
+	}
+	if (diff == 1)
+		return true;
+	else
+		return false;
+}
+void helper(string tempword, string endword, int cur, int& result, vector<string> templist)
+{
+	if (compare(tempword, endword))
+	{
+		result = cur + 1 < result ||result == 0 ? cur + 1 : result;
+	}
+	else if (cur > result&&result > 0)
+		return;
+	for (int i = 0; i < templist.size(); i++)
+	{
+		if (compare(tempword, templist[i]))
+		{
+			vector<string> next = templist;
+			next[i] = "";
+			helper(templist[i], endword, cur + 1, result, next);
+		}
+	}
+}
+
+
+//int ladderLength(string beginWord, string endWord, vector<string>& wordList)
+//{
+//	int cur = 1, result = 0, check=0;
+//	for (int i = 0; i < wordList.size(); i++)
+//	{
+//		if (wordList[i] == endWord)
+//		{
+//			check = 1;
+//			break;
+//		}
+//	}
+//	if (check == 0)
+//		return result;
+//	helper(beginWord, endWord, cur, result, wordList);
+//	return result;
+//}
+
+int ladderLength(string beginWord, string endWord, vector<string>& wordList)
+{
+	unordered_set<string> wordDict{ wordList.begin(),wordList.end() };
+	
+	if (wordDict.find(endWord) == wordDict.end())
+		return 0;
+	queue<string> tovist;
+	addnext(beginWord, tovist, wordDict);
+	int result = 2;
+	while (!tovist.empty())
+	{
+		int len = tovist.size();
+		for (int i = 0; i < len; i++)
+		{
+			string temp = tovist.front();
+			tovist.pop();
+			if (temp == endWord)
+				return result;
+			addnext(temp, tovist, wordDict);
+		}
+		result++;
+	}
+	return 0;
+}
+
+void addnext(string word, queue<string>& tovisit, unordered_set<string>& wordDict)
+{
+	wordDict.erase(word);
+	for (int i = 0; i < word.size(); i++)
+	{
+		char c = word[i];
+		for (int j = 0; j < 26; j++)
+		{
+			word[i] = 'a' + j;
+			if (wordDict.find(word) != wordDict.end())
+			{
+				tovisit.push(word);
+				wordDict.erase(word);
+			}
+		}
+		word[i] = c;
+	}
+}
+
+#pragma endregion
+
+#pragma region 105. Construct Binary Tree from Preorder and Inorder Traversal
+TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+	int mid = 0;
+	return helper(preorder, inorder, mid, 0, inorder.size() - 1);
+}
+
+TreeNode* helper(vector<int>& preorder, vector<int>& inorder, int& mid, int start, int end)
+{
+	if (start>end || mid>preorder.size())
+		return NULL;
+	TreeNode* root = new TreeNode(preorder[mid]);
+	auto dis = distance(inorder.begin(), find(inorder.begin() + start, inorder.begin() + end, preorder[mid]));
+	mid++;
+	root->left = helper(preorder, inorder, mid, start, dis - 1);
+	root->right = helper(preorder, inorder, mid, dis + 1, end);
+
+	return root;
+}
+#pragma endregion
+
+#pragma region 116. Populating Next Right Pointers in Each Node
+void connect(TreeLinkNode *root)
+{
+	if (root == NULL)
+		return;
+	TreeLinkNode* pre = root;
+	TreeLinkNode* cur = NULL;
+	while (pre->left)
+	{
+		cur = pre;
+		while (cur)
+		{
+			cur->left->next = cur->right;
+			if (cur->next)
+			{
+				cur->right->next = cur->next->left;
+			}
+			cur = cur->next;
+		}
+		pre = pre->left;
+	}
+}
+#pragma endregion
+
+
+
+
+
+
+
+
+
+
+

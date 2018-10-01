@@ -1,6 +1,8 @@
 #ifndef Leet_h
 #define Leet_h
 #include <vector>
+#include <queue>
+#include <unordered_set>
 
 using namespace std;
 
@@ -25,7 +27,7 @@ struct ListNode
 };
 #pragma endregion
 
-#pragma region TreeNode
+#pragma region TreeNode Struct
 struct TreeNode {
 	int val;
 	TreeNode *left;
@@ -33,6 +35,26 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 #pragma endregion
+
+#pragma region TreeLinkNode
+struct TreeLinkNode {
+	int val;
+	TreeLinkNode *left, *right, *next;
+	TreeLinkNode(int x) : val(x), left(NULL), right(NULL), next(NULL) {};
+};
+#pragma endregion
+
+#pragma region Interval Struct
+struct Interval
+{
+	int start;
+	int end;
+	Interval() :start(0), end(0) {};
+	Interval(int s, int e) :start(s), end(e) {};
+};
+
+#pragma endregion
+
 
 #pragma region 1 Two Sum
 vector<int> twosum(vector<int>& nums, int target);
@@ -233,22 +255,109 @@ vector<int> findAnagrams(string s, string p);
 int maxDepth(TreeNode* root);
 #pragma endregion
 
+#pragma region DP Gold
+int getMostGoldIt(int n, int w, vector<int> g, vector<int> p);
+int getMostGoldDP(int n, int w, vector<int> g, vector<int> p);
+#pragma endregion
 
+#pragma region Serling Cut DP
+int cutrecu(vector<int> len, vector<int> price, int l);
+int cutrecusive(vector<int> price, int n);
+int cutdp(vector<int> price, int n);
+#pragma endregion
 
+#pragma region 56. Merge Intervals
+void intervalsort(vector<Interval>& intervals, int start, int end);
+vector<Interval> merge(vector<Interval>& intervals);
+#pragma endregion
+
+#pragma region 88. Merge Sorted Array
+void merge(vector<int>& nums1, int m, vector<int>& nums2, int n);
+#pragma endregion
+
+#pragma region 75. Sort Colors
+void sortcolors(vector<int>& nums);
+#pragma endregion
+
+#pragma region 79. Word Search
+bool verify(vector<vector<char>>&board, string word, int i, int j, int index);
+bool exist(vector<vector<char>>& board, string word);
+#pragma endregion
+
+#pragma region 78. Subsets
+vector<vector<int>> subsets(vector<int>& nums);
+vector<vector<int>> subsetsbck(vector<int>& nums);
+#pragma endregion
+
+#pragma region 90. Subsets II
+vector<vector<int>> subsetsWithDup(vector<int>& nums);
+#pragma endregion
 
 #pragma region 46. Permutations
 vector<vector<int>> permute(vector<int>& nums);
+vector<vector<int>> permuteswap(vector<int>& nums);
 #pragma endregion
 
+#pragma region 47. Permutations II
+vector<vector<int>> permuteUnique(vector<int>& nums);
+#pragma endregion
 
+#pragma region 62. Unique Paths
+int uniquePaths(int m, int n);
+#pragma endregion
 
+#pragma region 31. Next Permutation
+void nextPermutation(vector<int>& nums);
+#pragma endregion
 
+#pragma region 94. Binary Tree Inorder Traversal
+vector<int> inorderTraversal(TreeNode* root);
+void recur(TreeNode* root, vector<int>& result);
+void inter(TreeNode* root, vector<int>& result);
+#pragma endregion
 
+#pragma region 39. Combination Sum
+vector<vector<int>> combinationSum(vector<int>& candidates, int target);
+void combin(vector<int>& candidates, vector<vector<int>>& result, vector<int>& temp, int target,int begin);
+#pragma endregion
 
+#pragma region 91. Decode Ways
+int numDecodings(string s);
+string its(int i);
+int sti(string s);
+void numd(string s, int& result);
+#pragma endregion
 
+#pragma region 121. Best Time to Buy and Sell Stock
+int maxProfit(vector<int>& prices);
+#pragma endregion
 
+#pragma region 122. Best Time to Buy and Sell Stock II
+int maxProfitII(vector<int>& prices);
+#pragma endregion
 
+#pragma region 102. Binary Tree Level Order Traversal
+vector<vector<int>> levelOrder(TreeNode* root);
+#pragma endregion
 
+#pragma region 103. Binary Tree Zigzag Level Order Traversal
+vector<vector<int>> zigzagLevelOrder(TreeNode* root);
+#pragma endregion
+
+#pragma region 127. Word Ladder
+int ladderLength(string beginWord, string endWord, vector<string>& wordList);
+bool compare(string a, string b);
+void addnext(string word, queue<string>& tovisit, unordered_set<string>& wordDict);
+#pragma endregion
+
+#pragma region 105. Construct Binary Tree from Preorder and Inorder Traversal
+TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder);
+TreeNode* helper(vector<int>& preorder, vector<int>& inorder, int& mid, int start, int end);
+#pragma endregion
+
+#pragma region 116. Populating Next Right Pointers in Each Node
+void connect(TreeLinkNode *root);
+#pragma endregion
 
 
 
