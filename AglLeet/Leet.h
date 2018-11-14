@@ -359,6 +359,21 @@ TreeNode* helper(vector<int>& preorder, vector<int>& inorder, int& mid, int star
 void connect(TreeLinkNode *root);
 #pragma endregion
 
+#pragma region 42. Trapping Rain Water
+int trap(vector<int>& height);
+#pragma endregion
+
+#pragma region 101. Symmetric Tree
+bool isSymmetric(TreeNode* root);
+bool ismirror(TreeNode* root1, TreeNode* root2);
+#pragma endregion
+
+
+
+
+
+
+
 
 
 

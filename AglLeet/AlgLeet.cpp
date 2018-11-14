@@ -360,10 +360,21 @@ int main()
 	//cout << maxProfitII(stock);
 
 	//127. Word Ladder
-	string be = "hit", ed = "cog";
-	vector<string> wl{ "hot","dot","dog","lot","log","cog" };
-	cout << ladderLength(be, ed, wl) << endl;
-	cout << wl.size();
+	//string be = "hit", ed = "cog";
+	//vector<string> wl{ "hot","dot","dog","lot","log","cog" };
+	//cout << ladderLength(be, ed, wl) << endl;
+	//cout << wl.size();
+
+	//42. Trapping Rain Water
+	//vector<int> test = { 0,1,0,2,10,0,1,3,2,11,2,1 };
+	//cout << trap(test);
+
+
+
+
+
+
+
 
 
 

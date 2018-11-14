@@ -2515,9 +2515,46 @@ void connect(TreeLinkNode *root)
 }
 #pragma endregion
 
+#pragma region 42. Trapping Rain Water
+int trap(vector<int>& height)
+{
+	int result = 0, current = 0;
+	stack<int> st;
+	while (current < height.size())
+	{
+		while (!st.empty() && height[current] > height[st.top()])
+		{
+			int top = st.top();
+			st.pop();
+			if (st.empty())
+				break;
+			int dis = current - st.top() - 1;
+			int bheight = min(height[current], height[st.top()]) - height[top];
+			result += dis * bheight;
+		}
+		st.push(current++);
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 101. Symmetric Tree
+bool isSymmetric(TreeNode* root)
+{
+	return ismirror(root, root);
 
 
+}
+bool ismirror(TreeNode* root1, TreeNode* root2)
+{
+	if (root1 == NULL && root2 == NULL)
+		return true;
+	if (root1 == NULL || root2 == NULL)
+		return false;
+	return (root1->val == root2->val) && ismirror(root1->left, root2->right) && ismirror(root1->right, root2->left);
 
+}
+#pragma endregion
 
 
 
