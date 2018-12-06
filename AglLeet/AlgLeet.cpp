@@ -8,7 +8,17 @@
 #include <conio.h>
 #include <unordered_map>
 #include <algorithm>
+#include "tt.h"
+
 using namespace std;
+class tr
+{
+public:
+	void see()
+	{
+		cout << "see";
+	}
+};
 vector<int> kmpProcess(string& needle) {
 	int n = needle.length();
 	vector<int> lps(n, 0);
@@ -32,8 +42,12 @@ int main()
 	//cout.precision(4);
 	//cout << fixed;
 
-	//class test
-	//cout << test().plus();
+	//test tt;
+	//cout << tt.plus();
+	//tr see;
+	//see.see();
+	
+
 
 	//1. Two Sums
 	//vector<int> nums{ 5,3,4,5,1 };
@@ -369,7 +383,9 @@ int main()
 	//vector<int> test = { 0,1,0,2,10,0,1,3,2,11,2,1 };
 	//cout << trap(test);
 
-
+	//125. Valid Palindrome
+string s = "A man, a plan, a canal: Panama";
+cout << isPalindrome(s);
 
 
 

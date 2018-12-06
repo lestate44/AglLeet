@@ -21,9 +21,15 @@
     <ClCompile Include="Leet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Leet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

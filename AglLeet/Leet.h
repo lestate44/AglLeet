@@ -368,12 +368,22 @@ bool isSymmetric(TreeNode* root);
 bool ismirror(TreeNode* root1, TreeNode* root2);
 #pragma endregion
 
+#pragma region 111. Minimum Depth of Binary Tree
+int minDepth(TreeNode* root);
+#pragma endregion
 
+#pragma region 110. Balanced Binary Tree
+int depth(TreeNode* root);
+bool isBalanced(TreeNode* root);
+#pragma endregion
 
+#pragma region 125. Valid Palindrome
+bool isPalindrome(string s);
+#pragma endregion
 
-
-
-
+#pragma region 219. Contains Duplicate II
+bool containsNearbyDuplicate(vector<int>& nums, int k);
+#pragma endregion
 
 
 

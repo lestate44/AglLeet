@@ -2556,9 +2556,109 @@ bool ismirror(TreeNode* root1, TreeNode* root2)
 }
 #pragma endregion
 
+#pragma region 111. Minimum Depth of Binary Tree
+//int minDepth(TreeNode* root) //BFS
+//{
+//	if (!root) 
+//		return 0;
+//	queue<TreeNode*> q;
+//	q.push(root);
+//	int result = 0;
+//	while (!q.empty())
+//	{
+//		result++;
+//		int len = q.size();
+//		for (int i = 0; i < len; ++i)
+//		{
+//			TreeNode* first = q.front();
+//			if (!first->left && !first->right)
+//				return result;
+//			if (first->left)
+//				q.push(first->left);
+//			if (first->right)
+//				q.push(first->right);
+//			q.pop();
+//		}
+//	}
+//}
+int minDepth(TreeNode* root) //DFS recursive
+{
+	if (!root)
+		return 0;
+	if (!root->left)
+		return 1 + minDepth(root->right);
+	else if (!root->right)
+		return 1 + minDepth(root->left);
+	return 1 + min(minDepth(root->left), minDepth(root->right));
 
 
+}
+#pragma endregion
 
+#pragma region 110. Balanced Binary Tree
+int depth(TreeNode* root)
+{
+	if (!root)
+		return 0;
+	int l = depth(root->left);
+	int r = depth(root->right);
+	if (l == -1 || r == -1 || abs(l - r) > 1)
+		return -1;
+	return max(l, r) + 1;
 
+}
+bool isBalanced(TreeNode* root)
+{
+	return depth(root) >= 0;
+
+}
+#pragma endregion
+
+#pragma region 125. Valid Palindrome
+bool isPalindrome(string s)
+{
+	int z = s.size();
+	for (int i = 0,j=z-1; i <= z/2&&j>=z/2;)
+	{
+		if (!ispunct(s[i]) && !isspace(s[i]) && !ispunct(s[j]) && !isspace(s[j]))
+		{
+			if (tolower(s[i]) != tolower(s[j]))
+				return false;
+			else
+			{
+				i++;
+				j--;
+			}
+
+		}
+		else if (ispunct(s[i]) || isspace(s[i]))
+			i++;
+		else if (ispunct(s[j]) || isspace(s[j]))
+			j--;			
+	}
+	return true;
+}
+#pragma endregion
+
+#pragma region 219. Contains Duplicate II
+bool containsNearbyDuplicate(vector<int>& nums, int k)
+{
+	if (k <= 0)
+		return false;
+	if (k > nums.size() - 1)
+		k = nums.size() - 1;
+	unordered_set<int> s;
+	for (int i = 0; i < nums.size(); i++)
+	{
+		if (s.size() > k)
+			s.erase(0);
+		if (s.find(nums[i]) != s.end())
+			return true;
+		s.insert(nums[i]);
+	}
+	return false;
+
+}
+#pragma endregion
 
 

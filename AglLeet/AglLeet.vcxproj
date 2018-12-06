@@ -124,9 +124,11 @@
   <ItemGroup>
     <ClCompile Include="AlgLeet.cpp" />
     <ClCompile Include="Leet.cpp" />
+    <ClCompile Include="tt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Leet.h" />
+    <ClInclude Include="tt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
