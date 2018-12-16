@@ -12,6 +12,7 @@
 #include <stack>
 #include <queue>
 #include <unordered_set>
+#include <sstream>
 
 using namespace std;
 
@@ -1973,7 +1974,6 @@ void permutebk(vector<vector<int>>& result, vector<int>& nums, vector<int>& temp
 		}
 	}
 }
-
 vector<vector<int>> permute(vector<int>& nums)
 {
 	vector<vector<int>> result;
@@ -1982,7 +1982,6 @@ vector<vector<int>> permute(vector<int>& nums)
 	permutebk(result, nums, temp);
 	return result;
 }
-
 void permuteswapbk(vector<int>& nums, int index, vector<vector<int>>& result)
 {
 	if (index >= nums.size())
@@ -2003,6 +2002,30 @@ vector<vector<int>> permuteswap(vector<int>& nums)
 	vector<vector<int>> result;
 	permuteswapbk(nums, 0, result);
 	return result;
+}
+vector<vector<int>> permuteiterate(vector<int>& nums)
+{
+
+	vector<vector<int>> res;
+	if (nums.size() == 0)
+		return res;
+	res.push_back(vector<int>{nums[0]});
+	for (int i = 1; i<nums.size(); i++)
+	{
+		vector<vector<int>> temp;
+		for (int j = 0; j < res.size(); j++)
+		{
+			for (int k = 0; k <= res[j].size(); k++)
+			{
+				vector<int> single;
+				single = res[j];
+				single.insert(single.begin() + k, nums[i]);
+				temp.push_back(single);
+			}
+		}
+		res = temp;
+	}
+	return res;
 }
 #pragma endregion
 
@@ -2661,4 +2684,564 @@ bool containsNearbyDuplicate(vector<int>& nums, int k)
 }
 #pragma endregion
 
+#pragma region 108. Convert Sorted Array to Binary Search Tree
+TreeNode* sortedArrayToBST(vector<int>& nums)
+{
+	return sortedArrayToBSThelper(nums, 0, nums.size());
+}
+TreeNode* sortedArrayToBSThelper(vector<int>& nums, int start, int end)
+{
+	if (end <= start)
+		return NULL;
+	int mid = (start + end) / 2;
+	TreeNode* result = new TreeNode(nums[mid]);
+	result->left = sortedArrayToBSThelper(nums, start, mid);
+	result->right = sortedArrayToBSThelper(nums, mid + 1, end);
+	return result;
+}
+#pragma endregion
 
+#pragma region 344. Reverse String
+string reverseString(string s)
+{
+	reverse(s.begin(), s.end());
+	return s;
+}
+#pragma endregion
+
+#pragma region 412. Fizz Buzz
+vector<string> fizzBuzz(int n)
+{
+	vector<string> result(n);
+	for (int i = 1; i <= n; i++)
+	{
+		if (i % 15 == 0)
+			result[i - 1] = "FizzBuzz";
+		else if (i % 3 == 0)
+			result[i - 1] = "Fizz";
+		else if (i % 5 == 0)
+			result[i - 1] = "Buzz";
+		else
+			result[i - 1] = to_string(i);
+	}
+	return result;
+
+}
+#pragma endregion
+
+#pragma region 283. Move Zeroes
+void moveZeroes(vector<int>& nums)
+{
+	int j = 0;
+	for (int i = 0; i < nums.size(); i++)
+	{
+		if (nums[i] != 0)
+			nums[j++] = nums[i];
+	}
+	for (; j < nums.size(); ++j)
+		nums[j] = 0;
+}
+#pragma endregion
+
+#pragma region 371. Sum of Two Integers
+int getSum(int a, int b)
+{
+	int sum = a, carry = b;
+	while (carry)
+	{
+		int temp = sum;
+		sum = sum ^ carry;
+		carry = (temp&carry) << 1;
+	}
+	return sum;
+}
+#pragma endregion
+
+#pragma region 206. Reverse Linked List
+ListNode* reverseList(ListNode* head)
+{
+	ListNode* pre = NULL, *cur = head, *temp;
+	while (cur)
+	{
+		temp = cur->next;
+		cur->next = pre;
+		pre = cur;
+		cur = temp;
+	}
+	return pre;
+}
+#pragma endregion
+
+#pragma region 237. Delete Node in a Linked List
+void deleteNode(ListNode* node)
+{
+	node->val = node->next->val;
+	node->next = node->next->next;
+}
+#pragma endregion
+
+#pragma region 171. Excel Sheet Column Number
+int titleToNumber(string s)
+{
+	int result = 0;
+	for (int i = 0; i<s.size(); i++)
+	{
+		result = result * 26 + (int)(s[i]) - 64;
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 169. Majority Element
+int majorityElement(vector<int>& nums)
+{
+	unordered_map<int, int> num;
+	for (int i = 0; i<nums.size(); i++)
+	{
+		auto it = num.find(nums[i]);
+		if (it != num.end())
+		{
+			it->second++;
+			if (it->second>nums.size() / 2)
+				return it->first;
+		}
+		else
+		{
+			pair<int, int> pa(nums[i], 1);
+			num.insert(pa);
+		}
+	}
+	return nums[0];
+}
+int maj(vector<int> &nums, int left, int right)
+{
+	if (left == right) return nums[left];
+	int mid = left + ((right - left) >> 1);
+	int lm = maj(nums, left, mid);
+	int rm = maj(nums, mid + 1, right);
+	if (lm == rm) return lm;
+	return count(nums.begin() + left, nums.begin() + right + 1, lm) > count(nums.begin() + left, nums.begin() + right + 1, rm) ? lm : rm;
+}
+#pragma endregion
+
+#pragma region 387. First Unique Character in a String
+int firstUniqChar(string s)
+{
+	unordered_map<char, int> mp;
+	for (auto i : s)
+	{
+		mp[i]++;
+	}
+	for (int i=0;i<s.size();i++)
+	{
+		auto p = mp.find(s[i]);
+		if (p->second == 1)
+			return i;
+	}
+	return -1;
+}
+#pragma endregion
+
+#pragma region 217. Contains Duplicate
+bool containsDuplicate(vector<int>& nums)
+{
+	unordered_map<int, int> mp;
+	for (int i = 0; i < nums.size(); i++)
+	{
+		mp[nums[i]]++;
+		if (mp[nums[i]] > 1)
+			return true;
+	}
+	return false;
+}
+#pragma endregion
+
+#pragma region 350. Intersection of Two Arrays II
+vector<int> intersect(vector<int>& nums1, vector<int>& nums2)
+{
+	vector<int> result;
+	int l1 = nums1.size(), l2 = nums2.size();
+	if (l1 > l2)
+		nums1.swap(nums2);
+	for (int i = 0; i < nums1.size(); i++)
+	{
+		auto it = find(nums2.begin(), nums2.end(), nums1[i]);
+		if (it != nums2.end())
+		{
+			result.push_back(nums1[i]);
+			nums2.erase(it);
+		}
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 202. Happy Number
+bool isHappy(int n)
+{
+	string num = to_string(n);
+	unordered_set<int> back;
+	back.insert(n);
+	int result = 0;
+	while (true)
+	{
+		for (int i = 0; i < num.size(); i++)
+		{
+			result += (num[i] - '0')*(num[i] - '0');
+		}
+		if (result == 1)
+			return true;
+		if (back.find(result)!=back.end())
+			return false;
+		num = to_string(result);
+		back.insert(result);
+		cout << num << endl;
+		result = 0;
+
+	}
+
+
+
+}
+#pragma endregion
+
+#pragma region 118. Pascal Triangle
+vector<vector<int>> generate(int numRows)
+{
+	vector<vector<int>> result(numRows);
+	for (int i = 0; i < numRows; i++)
+	{
+		for (int j = 0; j <= i; j++)
+		{
+			if (j == 0 || j == i)
+				result[i].push_back(1);
+			else
+				result[i].push_back(result[i - 1][j - 1] + result[i - 1][j]);
+		}
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 326. Power of Three
+bool isPowerOfThree(int n)
+{
+	while (n != 1)
+	{
+		if (n == 0 || n % 3 != 0)
+			return false;
+		else
+			n = n / 3;
+	}
+	return true;
+}
+#pragma endregion
+
+#pragma region 191. Number of 1 Bits
+int hammingWeight(uint32_t n)
+{
+	int result = 0;
+	while (n)
+	{
+		if ((n & 1) != 0)
+			result++;
+		n = n / 2;
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 198. House Robber
+int rob(vector<int>& nums)
+{
+	//if (nums.size() == 0)
+	//	return 0;
+	//vector<int>arr (nums.size()+1);
+	//arr[0] = 0;
+	//for (int i = 1; i <= nums.size(); i++)
+	//{
+	//	if (i == 1)
+	//		arr[i] = nums[i - 1];
+	//	else if (i < 3)
+	//		arr[i] = max(nums[i - 1], arr[i]);
+	//	else
+	//		arr[i] = max(max(arr[i - 2],arr[i-3])+ nums[i - 1], arr[i-1]);
+	//}
+	//return *(arr.end()-1);
+	int a = 0;
+	int b = 0;
+	int n = nums.size();
+	for (int i = 0; i<n; i++)
+	{
+		if (i % 2 == 0)
+		{
+			a = max(a + nums[i], b);
+		}
+		else
+		{
+			b = max(a, b + nums[i]);
+		}
+	}
+
+	return max(a, b);
+}
+#pragma endregion
+
+#pragma region 172. Factorial Trailing Zeroes
+int trailingZeroes(int n)
+{
+	int result = 0;
+	while (n)
+	{
+		n /= 5;
+		result += n;
+	
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 234. Palindrome Linked List
+bool isPalindrome(ListNode* head)
+{
+	int len = 0;
+	ListNode* temp = head;
+	stack<int> st;
+	while (temp)
+	{
+		st.push(temp->val);
+		temp = temp->next;
+		len++;
+	}
+	while (head)
+	{
+		if (head->val == st.top())
+		{
+			st.pop();
+			head = head->next;
+		}
+		else
+			return false;
+	}
+	return true;
+}
+#pragma endregion
+
+#pragma region 190. Reverse Bits
+uint32_t reverseBits(uint32_t n)
+{
+	uint32_t result = 0;
+	for (int i = 0; i<32; i++)
+	{
+		result = (result << 1) + (n >> i & 1);
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 189. Rotate Array
+void rotate(vector<int>& nums, int k)
+{
+	k = k % nums.size();
+	reverse(nums.begin(), nums.end());
+	reverse(nums.begin(), nums.begin() + k);
+	reverse(nums.begin() + k, nums.end());
+}
+#pragma endregion
+
+#pragma region 204. Count Primes
+int countPrimes(int n)
+{
+	if (n <= 2) return 0;
+	vector<bool> passed(n, false);
+	int sum = 1;
+	int upper = sqrt(n);
+	for (int i = 3; i<n; i += 2) {
+		if (!passed[i]) {
+			sum++;
+			//avoid overflow
+			if (i>upper) continue;
+			for (int j = i * i; j<n; j += i) {
+				passed[j] = true;
+			}
+		}
+	}
+	return sum;
+
+	//if (n <= 2) return 0;
+	//vector<bool> passed(n, false);
+	//int sum = 1;
+	//int upper = sqrt(n);
+	//for (int i = 3; i<n; i += 2) {
+	//	if (!passed[i]) {
+	//		sum++;
+	//		//avoid overflow
+	//		if (i>upper) continue;
+	//		for (int j = i * i; j<n; j += i) {
+	//			passed[j] = true;
+	//		}
+	//	}
+	//}
+	//return sum;
+}
+#pragma endregion
+
+#pragma region 347. Top K Frequent Elements
+vector<int> topKFrequent(vector<int>& nums, int k)
+{
+	vector<int> result;
+	unordered_map<int, int> map;
+	for (auto i : nums)
+	{
+		map[i]++;
+	}
+
+	priority_queue<pair<int, int>> pq;
+	for (auto i = map.begin(); i != map.end(); i++)
+	{
+		pq.push(make_pair(i->second, i->first));
+		if (pq.size() > nums.size() - k)
+		{
+			result.push_back(pq.top().second);
+			pq.pop();
+		}
+	}
+	return result;
+
+}
+#pragma endregion
+
+#pragma region 454. 4Sum II
+int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D)
+{
+	unordered_map<int, int> ab;
+	for (auto a : A){
+		for (auto b : B) {
+			++ab[a + b];
+		}
+	}
+	int count = 0;
+	for (auto c : C) {
+		for (auto d : D)
+		{
+			//auto it = ab.find(0 - c - d);
+			//if (it != ab.end())
+			//	count += it->second;
+			count += ab[-c - d];
+		}
+	}
+	return count;
+
+}
+#pragma endregion
+
+#pragma region 230. Kth Smallest Element in a BST
+int kthSmallest(TreeNode* root, int k)
+{
+	stack<TreeNode*> st;
+	while (true)
+	{
+		if (root) {
+			st.push(root);
+			root = root->left;
+		}
+		else {
+			k--;
+			if (k == 0)
+				return st.top()->val;
+			root = st.top()->right;
+			st.pop();
+		}
+
+	}
+
+}
+#pragma endregion
+
+#pragma region 378. Kth Smallest Element in a Sorted Matrix
+int kthSmallest(vector<vector<int>>& matrix, int k)
+{
+	int len = matrix.size(), mid;
+	int left = matrix[0][0], right = matrix[len - 1][len - 1];
+	while (left<right)
+	{
+		mid = (left + right) / 2;
+		int count = 0;
+		for (int i = 0; i<len; i++)
+		{
+			int pos = upper_bound(matrix[i].begin(), matrix[i].end(), mid) - matrix[i].begin();
+			count += pos;
+		}
+		if (count<k)
+			left = mid + 1;
+		else
+			right = mid;
+	}
+	return left;
+}
+#pragma endregion
+
+#pragma region Merge two sorted linked lists
+ListNode* mergeListsRE(ListNode* head1, ListNode* head2)
+{
+	if (!head1)
+		return head2;
+	if (!head2)
+		return head1;
+	if (head1->val < head2->val)
+	{
+		head1->next = mergeListsRE(head1->next, head2);
+		return head1;
+	}
+	else
+	{
+		head2->next = mergeListsRE(head1, head2->next);
+		return head2;
+	}
+}
+ListNode* mergeListsIT(ListNode* head1, ListNode* head2)
+{
+	ListNode* result;
+	if (!head1)
+		return head2;
+	if (!head2)
+		return head1;
+	if (head1->val < head2->val)
+		result = head1;
+	else
+	{
+		result = head2;
+		head2 = head1;
+		head1 = result;
+	}
+	while (head1->next)
+	{
+		if (head1->next->val > head2->val)
+		{
+			ListNode* temp = head1->next;
+			head1->next = head2;
+			head2 = temp;
+		}
+		head1 = head1->next;
+	}
+	head1->next = head2;
+	return result;
+}
+#pragma endregion
+
+#pragma region 165. Compare Version Numbers
+int compareVersion(string version1, string version2)
+{
+	for (auto& w : version1) if (w == '.') w = ' ';
+	for (auto& w : version2) if (w == '.') w = ' ';
+	istringstream s1(version1), s2(version2);
+	while (1) {
+		int n1, n2;
+		if (not(s1 >> n1)) n1 = 0;
+		if (not(s2 >> n2)) n2 = 0;
+		if (not s1 and not s2) return 0;
+		if (n1<n2) return -1;
+		if (n1>n2) return 1;
+	}
+}
+#pragma endregion

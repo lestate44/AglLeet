@@ -9,6 +9,54 @@
 #include <unordered_map>
 #include <algorithm>
 #include "tt.h"
+#include <set>
+#include <sstream>
+
+
+int findMinGates(vector<int> arrivals, vector<int> departures, int flights) {
+	sort(arrivals.begin(), arrivals.end());
+	sort(departures.begin(), departures.end());
+	//initialize current port and result;
+	int curr = 1, result = 1;
+	//initialize index for both vectors;
+	int i = 1, j = 0;
+	//start looping
+	while (i<flights && j<flights)
+	{
+		//if arrival time is greater than departure, increase current port
+		if (arrivals[i] <= departures[j])
+		{
+			curr++;
+			//if current port is greater than max result, update result
+			if (curr>result)
+				result = curr;
+			i++;
+		}
+		else
+		{
+			curr--;
+			j++;
+		}
+	}
+	return result;
+
+}
+
+void swap2(int *p, int *q)
+{
+     int temp;
+     temp = *p;
+	 * p = *q;
+	 * q = temp;
+}
+
+void swap3(int *p, int *q)
+{
+    int *temp;
+    temp = p;
+    p = q;
+    q = temp;
+}
 
 using namespace std;
 class tr
@@ -301,7 +349,7 @@ int main()
 	//cout << exist(board, word);
 
 	//78. Subsets
-	//vector<int> nums{ 1,2,3,4 };
+	//vector<int> nums{ 1,2,3 };
 	//vector<vector<int>> result = subsetsbck(nums);
 	//for (int i = 0; i < result.size(); i++)
 	//{
@@ -384,14 +432,76 @@ int main()
 	//cout << trap(test);
 
 	//125. Valid Palindrome
-string s = "A man, a plan, a canal: Panama";
-cout << isPalindrome(s);
+	//string s = "A man, a plan, a canal: Panama";
+	//cout << isPalindrome(s);
+	//
+	//
+	//
+	//reverse(s.begin(), s.end());
+	//cout << s;
 
+	//ListNode* head = new ListNode(1);
+	//head->add(2);
+	//head->add(3);
+	//head->add(4);
+	//head->add(5);
+	//head->display();
+	//
+	//ListNode* k = reverseList(head);
+	//k->display();
 
+	//char a = 'A';
+	//int x = (int)a;
+	//cout << x;
 
+	//169. Majority Element
+	//vector<int> num{ 1, 2, 1 };
+	//cout << maj(num,0,2);
 
+	//387. First Unique Character in a String
+	//string a = "abc";
 
+	//cout << isHappy(99);
+	//int i = 1;
+	//i = (i << 1);
+	//cout << i;
 
+	//vector<int> s{ 9,1,1,7 };
+	//cout << rob(s);
+	
+	//int t = 1808548329;
+	//cout << trailingZeroes(t);
+	
+	//cout << countPrimes(40);
+
+	//vector<int> a{ 1,2,3 };
+	//vector<vector<int>> res = permuteiterate(a);
+
+	//unordered_map<string, int> map;
+	//map.insert({ "abc", 31 });
+	//cout << map["abc"];
+	
+	//string a = "1 2 3";
+	//istringstream is(a);
+	//string aaa,bbb,ccc;
+	//is >> aaa;
+	//cout << aaa<<endl;
+	//is >> bbb;
+	//cout << bbb;
+
+	//string a = "0.3", b = "0.1";
+	//cout << compareVersion(a, b);
+	
+
+	//int a = 1, b = 3;
+	//int* ap = &a, *bp = &b;
+	//cout << ap << bp << endl;
+	//swap3(ap, bp);
+	//cout << ap << bp;
+	
+	//vector<int> arr{ 900,910,920 };
+	//vector<int> dep{ 930,915,925 };
+	//cout << findMinGates(arr, dep, 3);
 
 
 

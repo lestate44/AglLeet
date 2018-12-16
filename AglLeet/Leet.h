@@ -296,6 +296,7 @@ vector<vector<int>> subsetsWithDup(vector<int>& nums);
 #pragma region 46. Permutations
 vector<vector<int>> permute(vector<int>& nums);
 vector<vector<int>> permuteswap(vector<int>& nums);
+vector<vector<int>> permuteiterate(vector<int>& nums);
 #pragma endregion
 
 #pragma region 47. Permutations II
@@ -384,6 +385,126 @@ bool isPalindrome(string s);
 #pragma region 219. Contains Duplicate II
 bool containsNearbyDuplicate(vector<int>& nums, int k);
 #pragma endregion
+
+#pragma region 108. Convert Sorted Array to Binary Search Tree
+TreeNode* sortedArrayToBST(vector<int>& nums);
+TreeNode* sortedArrayToBSThelper(vector<int>& nums, int start, int end);
+#pragma endregion
+
+#pragma region 344. Reverse String
+string reverseString(string s);
+#pragma endregion
+
+#pragma region 412. Fizz Buzz
+vector<string> fizzBuzz(int n);
+#pragma endregion
+
+#pragma region 283. Move Zeroes
+void moveZeroes(vector<int>& nums);
+#pragma endregion
+
+#pragma region 371. Sum of Two Integers
+int getSum(int a, int b);
+#pragma endregion
+
+#pragma region 206. Reverse Linked List
+ListNode* reverseList(ListNode* head);
+#pragma endregion
+
+#pragma region 237. Delete Node in a Linked List
+void deleteNode(ListNode* node);
+#pragma endregion
+
+#pragma region 171. Excel Sheet Column Number
+int titleToNumber(string s);
+#pragma endregion
+
+#pragma region 169. Majority Element
+int majorityElement(vector<int>& nums);
+int maj(vector<int> &nums, int left, int right);
+#pragma endregion
+
+#pragma region 387. First Unique Character in a String
+int firstUniqChar(string s);
+#pragma endregion
+
+#pragma region 217. Contains Duplicate
+bool containsDuplicate(vector<int>& nums);
+#pragma endregion
+
+#pragma region 350. Intersection of Two Arrays II
+vector<int> intersect(vector<int>& nums1, vector<int>& nums2);
+#pragma endregion
+
+#pragma region 202. Happy Number
+bool isHappy(int n);
+#pragma endregion
+
+#pragma region 118. Pascal Triangle
+vector<vector<int>> generate(int numRows);
+#pragma endregion
+
+#pragma region 326. Power of Three
+bool isPowerOfThree(int n);
+#pragma endregion
+
+#pragma region 191. Number of 1 Bits
+int hammingWeight(uint32_t n);
+#pragma endregion
+
+#pragma region 198. House Robber
+int rob(vector<int>& nums);
+#pragma endregion
+
+#pragma region 172. Factorial Trailing Zeroes
+int trailingZeroes(int n);
+#pragma endregion
+
+#pragma region 234. Palindrome Linked List
+bool isPalindrome(ListNode* head);
+#pragma endregion
+
+#pragma region 190. Reverse Bits
+uint32_t reverseBits(uint32_t n);
+#pragma endregion
+
+#pragma region 189. Rotate Array
+void rotate(vector<int>& nums, int k);
+#pragma endregion
+
+#pragma region 204. Count Primes
+int countPrimes(int n);
+#pragma endregion
+
+#pragma region 347. Top K Frequent Elements
+vector<int> topKFrequent(vector<int>& nums, int k);
+#pragma endregion
+
+#pragma region 454. 4Sum II
+int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D);
+#pragma endregion
+
+#pragma region 230. Kth Smallest Element in a BST
+int kthSmallest(TreeNode* root, int k);
+#pragma endregion
+
+#pragma region 378. Kth Smallest Element in a Sorted Matrix
+int kthSmallest(vector<vector<int>>& matrix, int k);
+#pragma endregion
+
+#pragma region Merge two sorted linked lists
+ListNode* mergeListsRE(ListNode* head1, ListNode* head2);
+ListNode* mergeListsIT(ListNode* head1, ListNode* head2);
+#pragma endregion
+
+#pragma region 165. Compare Version Numbers
+int compareVersion(string version1, string version2);
+#pragma endregion
+
+
+
+
+
 
 
 
