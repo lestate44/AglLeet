@@ -43,6 +43,15 @@ struct TreeLinkNode {
 	TreeLinkNode(int x) : val(x), left(NULL), right(NULL), next(NULL) {};
 };
 #pragma endregion
+#pragma region struct point
+struct point
+{
+	int x;
+	int y;
+	point(int x, int y) :x(x), y(y) {};
+};
+#pragma endregion
+
 
 #pragma region Interval Struct
 struct Interval
@@ -501,9 +510,25 @@ ListNode* mergeListsIT(ListNode* head1, ListNode* head2);
 int compareVersion(string version1, string version2);
 #pragma endregion
 
+#pragma region 328. Odd Even Linked List
+ListNode* oddEvenList(ListNode* head);
+#pragma endregion
 
+#pragma region Maximum Minimum Path
+int mmpath(vector<vector<int>> matrix);
+#pragma endregion
 
+#pragma region amword
+vector<string> amword(string s,int k);
+#pragma endregion
 
+#pragma region ammaze
+int ammaze(vector<vector<int>> maze);
+#pragma endregion
+
+#pragma region amkp
+vector<point> amkp(vector<point> points, point origin, int k);
+#pragma endregion
 
 
 

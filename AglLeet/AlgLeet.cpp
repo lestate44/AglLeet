@@ -11,25 +11,34 @@
 #include "tt.h"
 #include <set>
 #include <sstream>
+#include <map>
 
+struct Base {
+	virtual void print(int x = 1) {
+		std::cout << "Base:" << x;
+	}
+
+};
+
+struct Derived : Base {
+	virtual void print(int x = 2) {
+		std::cout << "Derived:" << x;
+	}
+
+};
 
 int findMinGates(vector<int> arrivals, vector<int> departures, int flights) {
 	sort(arrivals.begin(), arrivals.end());
 	sort(departures.begin(), departures.end());
 	//initialize current port and result;
-	int curr = 1, result = 1;
+	int curr = 0, result = 0;
 	//initialize index for both vectors;
-	int i = 1, j = 0;
-	//start looping
-	while (i<flights && j<flights)
+	for (int i = 0, j = 0; i < flights;)
 	{
-		//if arrival time is greater than departure, increase current port
-		if (arrivals[i] <= departures[j])
+		if (arrivals[i] < departures[j])
 		{
-			curr++;
-			//if current port is greater than max result, update result
-			if (curr>result)
-				result = curr;
+			curr ++ ;
+			result = max(curr, result);
 			i++;
 		}
 		else
@@ -41,6 +50,7 @@ int findMinGates(vector<int> arrivals, vector<int> departures, int flights) {
 	return result;
 
 }
+
 
 void swap2(int *p, int *q)
 {
@@ -84,9 +94,16 @@ void ad(int& x)
 	return;
 }
 
+auto func(int i) ->int
+{
+	return i;
+}
 
 int main()
 {
+
+
+
 	//cout.precision(4);
 	//cout << fixed;
 
@@ -499,9 +516,25 @@ int main()
 	//swap3(ap, bp);
 	//cout << ap << bp;
 	
-	//vector<int> arr{ 900,910,920 };
-	//vector<int> dep{ 930,915,925 };
-	//cout << findMinGates(arr, dep, 3);
+	//vector<int> arr{  };
+	//vector<int> dep{  };
+	//cout << findMinGates(arr, dep, 0);
+
+
+
+	//Base * B = new Derived;
+	//B->print();
+
+	//vector <vector<int>> ma = { {8,4,3,5},{6,5,9,8},{7,2,3,6} };
+	//cout << mmpath(ma);
+
+	//string s = "awaglknagawunagwkwagl";
+	//vector<string> re = amword(s, 4);
+	//for (auto &i : re)
+	//	cout << i << endl;
+
+	vector<vector<int>> maze = { {1,0,0},{1,1,0},{0,9,1} };
+	cout << ammaze(maze);
 
 
 

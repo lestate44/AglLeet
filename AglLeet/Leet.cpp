@@ -16,6 +16,8 @@
 
 using namespace std;
 
+
+
 #pragma region class test
 int test::plus()
 {
@@ -3245,3 +3247,184 @@ int compareVersion(string version1, string version2)
 	}
 }
 #pragma endregion
+
+#pragma region 328. Odd Even Linked List
+ListNode* oddEvenList(ListNode* head)
+{
+	ListNode* result = head;
+	ListNode* end = head;
+	int len = 0;
+	while (end&&end->next)
+	{
+		end = end->next;
+		len++;
+	}
+	if (len<2)
+		return result;
+	for (int i = 0; i < (len + 1) / 2; i++)
+	{
+		ListNode* temp = head->next;
+		head->next = head->next->next;
+		end->next = temp;
+		end = end->next;
+		end->next = NULL;
+		head = head->next;
+	}
+	return result;
+
+
+
+}
+#pragma endregion
+
+#pragma region Maximum Minimum Path
+int mmpath(vector<vector<int>> matrix)
+{
+	int n = matrix.size(), m = matrix[0].size();
+	vector<vector<int>> dp(matrix.size(),vector<int>(matrix[0].size()));
+	dp[0][0] = matrix[0][0];
+	for (int i = 1; i < n; i++)
+	{
+		dp[i][0] = min(dp[i - 1][0], matrix[i][0]);
+	}
+	for (int i = 1; i < m; i++)
+	{
+		dp[0][i] = min(dp[0][i - 1], matrix[0][i]);
+	}
+	for (int i = 1; i < n; i++)
+	{
+		for (int j = 1; j < m; j++)
+		{
+			dp[i][j] = min(max(dp[i-1][j],dp[i][j-1]),matrix[i][j]);
+		}
+	}
+	return dp[n-1][m-1];
+
+
+}
+#pragma endregion
+
+#pragma region amword
+vector<string> amword(string s, int k)
+{
+	vector<string> result;
+	unordered_set<string> sset;
+	unordered_set<char> cset;
+	int l = 0, r = 0;
+	while (r < s.size())
+	{
+		if (cset.find(s[r]) != cset.end() )
+		{
+			cset.erase(s[l++]);
+
+		}
+		else
+			cset.insert(s[r++]);
+
+		if (r - l  == k)
+		{
+			string candidate = s.substr(l, k);
+			if (sset.find(candidate) == sset.end())
+			{
+				sset.insert(candidate);
+				result.push_back(candidate);
+			}
+			cset.erase(s[l++]);
+		}
+
+	}
+	return result;
+
+}
+#pragma endregion
+
+#pragma region ammaze
+int ammaze(vector<vector<int>> maze)
+{
+	int result = 0;
+	vector<vector<bool>> visit(maze.size(), vector<bool>(maze[0].size(), false));
+	//vector<vector<int>> step(maze.size(), vector<int>(maze[0].size(), 1));
+	queue<point> qu;
+	qu.push(point(0, 0));
+	visit[0][0] = true;
+	int direct[4][2] = { {0,-1},{0,1},{1,0},{-1,0} };
+	while (!qu.empty())
+	{
+		int size = qu.size();
+		for (int i = 0; i < size; i++)
+		{
+			point p = qu.front();
+			qu.pop();
+			if (maze[p.x][p.y] == 9)
+				return result;
+			for (int i = 0; i < 4; i++)
+			{
+				int x = p.x + direct[i][0];
+				int y = p.y + direct[i][1];
+				if (x >= 0 && x < maze.size() && y >= 0 && y < maze[0].size() && maze[x][y] != 0 && !visit[x][y])
+				{
+					point np(x, y);
+					qu.push(np);
+					visit[x][y] = true;
+				}
+			}
+		}
+		result++;
+	
+	}
+	return -1;
+
+}
+#pragma endregion
+
+
+#pragma region amkp
+int dis(point a, point b)
+{
+	return (a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y);
+}
+typedef bool(*comp)(point, point);
+bool compare(point a, point b)
+{
+	return dis(a, point(0, 0)) < dis(b, point(0, 0));
+}
+vector<point> amkp(vector<point> points, point origin, int k)
+{
+	priority_queue<point, vector<point>, comp>pq(compare);
+	for (int i = 0; i < points.size(); i++)
+	{
+		pq.push(points[i]);
+		if (i >= k)
+			pq.pop();
+	}
+	vector<point> result;
+	for (int i = 0; i < k; i++)
+	{
+		result.push_back(pq.top());
+		pq.pop();
+	}
+	return result;
+}
+#pragma endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
