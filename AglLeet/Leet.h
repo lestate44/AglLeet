@@ -530,7 +530,15 @@ int ammaze(vector<vector<int>> maze);
 vector<point> amkp(vector<point> points, point origin, int k);
 #pragma endregion
 
+#pragma region 72. Edit Distance
+int minDistance(string word1, string word2);
+#pragma endregion
 
+#pragma region queensr
+void queensr(int (&a)[8][8], int &count,int row);
+bool check(const int(&a)[8][8], int x, int y);
+void queendisplay(const int(&a)[8][8]);
+#pragma endregion
 
 
 #endif

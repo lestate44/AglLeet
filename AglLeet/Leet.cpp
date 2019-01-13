@@ -3377,7 +3377,6 @@ int ammaze(vector<vector<int>> maze)
 }
 #pragma endregion
 
-
 #pragma region amkp
 int dis(point a, point b)
 {
@@ -3407,8 +3406,93 @@ vector<point> amkp(vector<point> points, point origin, int k)
 }
 #pragma endregion
 
+#pragma region 72. Edit Distance
+int minDistance(string word1, string word2)
+{
+	int l1 = word1.size(), l2 = word2.size();
+	vector<vector<int>> dp(l2 + 1, vector<int>(l1 + 1, 0));
+	dp[0][0] = 0;
+	for (int i = 1; i <= l1; i++)
+	{
+		dp[0][i] = i;
+	}
+	for (int j = 1; j <= l2; j++)
+	{
+		dp[j][0] = j;
+	}
+
+	for (int i = 1; i <= l2; i++)
+	{
+		for (int j = 1; j <= l1; j++)
+		{
+			if (word1[j - 1] == word2[i - 1])
+				dp[i][j] = dp[i - 1][j - 1];
+			else
+			{
+				dp[i][j] = min(min(dp[i - 1][j] + 1, dp[i][j - 1] + 1), dp[i - 1][j - 1] + 1);
+			}
+		}
+	}
+
+	return dp[l2][l1];
 
 
+}
+#pragma endregion
+
+#pragma region queensr
+void queensr(int(&a)[8][8], int &count, int row)
+{
+	if (row > 7)
+	{
+		count++;
+		cout << "-------" + to_string(count) + "------" << endl;
+		queendisplay(a);
+	}
+	else
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			if (check(a, row, j))
+			{
+				a[row][j] = 1;
+				queensr(a, count, row+1);
+				a[row][j] = 0;
+			}
+		}
+	}
+
+	return;
+}
+bool check(const int(&a)[8][8], int x, int y)
+{
+	for (int i = 0; i <= x; i++)
+	{
+		if (a[i][y] == 1)
+			return false;
+		for (int j = 0; j < 8; j++)
+		{
+			if (abs(i - x) == abs(j - y) && a[i][j] == 1)
+				return false;
+		}
+	}
+	return true;
+}
+void queendisplay(const int(&a)[8][8])
+{
+	for (auto &r : a)
+	{
+		for (auto &c : r)
+		{
+			if (c == 1)
+				cout << "o ";
+			else
+				cout << "* ";
+		}
+		cout << endl;
+	}
+}
+#pragma endregion
 
 
 

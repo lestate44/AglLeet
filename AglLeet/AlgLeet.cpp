@@ -528,14 +528,20 @@ int main()
 	//vector <vector<int>> ma = { {8,4,3,5},{6,5,9,8},{7,2,3,6} };
 	//cout << mmpath(ma);
 
-	//string s = "awaglknagawunagwkwagl";
+	//string s = "bbvaee";
 	//vector<string> re = amword(s, 4);
 	//for (auto &i : re)
 	//	cout << i << endl;
 
-	vector<vector<int>> maze = { {1,0,0},{1,1,0},{0,9,1} };
-	cout << ammaze(maze);
+	//vector<vector<int>> maze = { {1,0,0},{1,1,0},{0,9,1} };
+	//cout << ammaze(maze);
+	
 
+	//string a = "abcd", b = "acd";
+	//cout << minDistance(a, b);
 
-
+int a[8][8];
+int count = 0, row = 0;
+queensr(a,count,0);
+cout << count;
 }
