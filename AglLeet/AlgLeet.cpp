@@ -540,8 +540,19 @@ int main()
 	//string a = "abcd", b = "acd";
 	//cout << minDistance(a, b);
 
-int a[8][8];
-int count = 0, row = 0;
-queensr(a,count,0);
-cout << count;
+	//int a[8][8];
+	//int count = 0, row = 0;
+	//queensr(a,count,0);
+	//cout << count;
+
+cout << lpdp("abbc");
+
+
+
+
+
+
+
+
+
 }

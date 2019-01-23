@@ -3494,7 +3494,30 @@ void queendisplay(const int(&a)[8][8])
 }
 #pragma endregion
 
-
+#pragma region longestpalindromedp
+string lpdp(string s)
+{
+	if (s.empty())
+		return s;
+	int n = s.length();
+	vector<vector<bool>> dp(n, vector<bool>(n, false));
+	int left = 0, right = 0;
+	for (int i = n - 2; i >= 0; i--)
+	{
+		dp[i][i] = true;
+		for (int j = i + 1; j < n; j++)
+		{
+			dp[i][j] = (s[i] == s[j] && (j - i < 2 || dp[i + 1][j - 1]));
+			if (dp[i][j] && (right - left < j - i))
+			{
+				left = i;
+				right = j;
+			}
+		}
+	}
+	return s.substr(left, right-left+1);
+}
+#pragma endregion
 
 
 

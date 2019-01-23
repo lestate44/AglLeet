@@ -540,5 +540,9 @@ bool check(const int(&a)[8][8], int x, int y);
 void queendisplay(const int(&a)[8][8]);
 #pragma endregion
 
+#pragma region longestpalindromedp
+string lpdp(string s);
+#pragma endregion
+
 
 #endif
