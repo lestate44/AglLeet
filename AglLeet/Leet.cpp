@@ -3519,8 +3519,940 @@ string lpdp(string s)
 }
 #pragma endregion
 
+#pragma region 98. Validate Binary Search Tree
+bool isValidBST(TreeNode* root) {
+	vector<int> temp;
+
+	bsthelper(root, temp);
+	for (auto i : temp)
+		cout << i;
+	for (int i = 0, j = 1; j<temp.size(); i++, j++)
+	{
+		if (temp[i] >= temp[j])
+			return false;
+	}
+	return true;
 
 
+
+}
+void bsthelper(TreeNode* root, vector<int>& v)
+{
+	if (root->left)
+		bsthelper(root->left, v);
+	v.push_back(root->val);
+	if (root->right)
+		bsthelper(root->right, v);
+}
+
+bool isValidBSTW(TreeNode* root)
+{
+	stack<TreeNode*> st;
+	list<int> t;
+	TreeNode* temp =root;
+	while (!st.empty()||temp)
+	{
+		if (temp)
+		{
+			st.push(temp);
+			temp = temp->left;
+		}
+		else
+		{
+			temp = st.top();
+			cout << temp->val;
+			t.push_back(temp->val);
+			if (t.size() == 2)
+			{
+				if (t.front() >= t.back())
+					return false;
+				else
+				{
+					t.pop_front();
+				}					
+			}
+			st.pop();
+			temp = temp->right;
+		}
+	}
+	return true;
+
+
+}
+#pragma endregion
+
+#pragma region 130.Surrounded Region
+void solve(vector<vector<char>>& board)
+{
+	if (board.size()<3 || board[0].size()<3)
+		return;
+	for (int j = 0; j<board[0].size(); j++)
+	{
+		update(board, 0, j);
+		update(board, board.size() - 1, j);
+	}
+	for (int i = 0; i<board.size(); i++)
+	{
+		update(board, i, 0);
+		update(board, i, board[0].size() - 1);
+	}
+	display(board);
+	for (int i = 0; i<board.size(); i++)
+	{
+		for (int j = 0; j<board[0].size(); j++)
+		{
+			if (board[i][j] == 'O')
+				board[i][j] = 'X';
+			if (board[i][j] == 'P')
+				board[i][j] = 'O';
+		}
+	}
+
+
+	return;
+}
+void display(vector<vector<char>>& board)
+{
+	for (int i = 0; i < board.size(); i++)
+	{
+		for (int j = 0; j < board[0].size(); j++)
+			cout << board[i][j] << " ";
+		cout << endl;
+	}
+}
+void update(vector<vector<char>>& board, int i, int j)
+{
+	if (i<0 || i>board.size() - 1 || j<0 || j>board[0].size() - 1)
+		return;
+
+	if (board[i][j] == 'O')
+	{
+		board[i][j] = 'P';
+		update(board, i - 1, j);
+		update(board, i + 1, j);
+		update(board, i, j - 1);
+		update(board, i, j + 1);
+	}
+}
+#pragma endregion
+
+#pragma region 131. Palindrome Partitioning
+vector<vector<string>> partition(string s)
+{
+	vector <vector<string>> result;
+	vector<string> part;
+	partition(result, part, s, 0);
+	return result;
+}
+bool ispal(string& s, int l, int r)
+{
+	while (l < r)
+	{
+		if (s[l] != s[r])
+			return false;
+		l++;
+		r--;
+	}
+	return true;
+}
+void partition(vector<vector<string>>& result, vector<string>part, string& s, int start)
+{
+	if (start == s.size())
+		result.push_back(part);
+	else
+	{
+		for (int i = start; i < s.size(); i++)
+		{
+			if (ispal(s, start, i))
+			{
+				part.push_back(s.substr(start, i - start + 1));
+				partition(result, part, s, i + 1);
+				part.pop_back();
+			}
+		}
+	}
+}
+void partition2(vector<vector<string>>& result, vector<string>part, string& s, int start)
+{
+	if (start >= s.size()-1)
+	{
+		if(part.size()>0)
+			result.push_back(part);
+	}
+	else 
+	{
+		for (int i = start + 1; i < s.size(); i++)
+		{
+			if (ispal(s, start, i))
+			{
+				part.push_back(s.substr(start, i - start + 1));
+				partition2(result, part, s, i + 1);
+				part.pop_back();
+			}
+			else
+			{
+				if (i >= s.size()-1&&part.size()>0)
+					result.push_back(part);
+			}
+		}
+	}
+
+
+}
+
+vector<vector<string>> partition2(string& s)
+{
+	vector <vector<string>> result;
+	vector<string> part;
+	for (int i = 0; i < s.size(); i++)
+	{
+		partition2(result, part, s, i);
+	}
+
+	return result;
+
+}
+
+#pragma endregion
+
+#pragma region 134. Gas Station
+int canCompleteCircuit(vector<int>& gas, vector<int>& cost)
+{
+	int tank = 0, curr = 0;
+	int start = 0;
+	int len = gas.size();
+	while (start<len)
+	{
+		for (int i = start; i<start + len; i++)
+		{
+			if (i >= len)
+				tank = tank + gas[i - len] - cost[i - len];
+			else
+				tank = tank + gas[i] - cost[i];
+			if (tank<0)
+				break;
+			else
+			{
+				curr++;
+			}
+		}
+		if (curr - start == len)
+			return start;
+		else
+		{
+			curr++;
+			start = curr;
+			tank = 0;
+		}
+	}
+	return -1;
+}
+#pragma endregion
+
+#pragma region 139. Word Break
+bool wordbreak(string s, vector<string>& wordDict)
+{
+	vector<bool> dp(s.size(), false);
+	dp[0] = 1;
+	unordered_set<string> dict;
+	for (auto word : wordDict)
+		dict.insert(word);
+
+	for (int i = 1; i <= s.size(); i++)
+	{
+		for (int j = i - 1; i >= 0; j--)
+		{
+			if (dp[j])
+			{
+				if (dict.find(s.substr(j, i - j)) != dict.end())
+				{
+					dp[i] = 1;
+					break;
+				}
+			}
+		}
+	}
+	return dp[s.size()];
+
+
+
+}
+
+bool wordbreakbf(string s, vector<string>& wordDict)
+{
+	unordered_set<string> dict;
+	for (auto i : wordDict)
+		dict.insert(i);
+	return wordbreakbfhelper(s, dict);
+
+
+}
+
+bool wordbreakbfhelper(string s, unordered_set<string>& wordDict)
+{
+	if (s.size() == 0)
+		return true;
+	for (int i = 1; i <= s.size(); i++)
+	{
+		if (wordDict.find(s.substr(0, i)) != wordDict.end() && wordbreakbfhelper(s.substr(i), wordDict))
+			return true;
+	}
+	return false;
+}
+
+bool wordbreakbfs(string s, vector<string>& wordDict)
+{
+	unordered_set<string> dict;
+	for (auto &i : wordDict)
+		dict.insert(i);
+	queue<int> BFS;
+	unordered_set<int> visited;
+	BFS.push(0);
+	while (!BFS.empty())
+	{
+		int start = BFS.front();
+		BFS.pop();
+		if (visited.find(start) == visited.end())
+		{
+			visited.insert(start);
+			for (int j = start; j < s.size(); j++)
+			{
+				string temp = s.substr(start, j - start + 1);
+				if (dict.find(temp) != dict.end())
+				{
+					BFS.push(j + 1);
+					if (j + 1 == s.size())
+						return true;
+				}
+			}
+		}
+	}
+	return false;
+
+
+
+}
+#pragma endregion
+
+#pragma region 148. Sort List
+ListNode* sortList(ListNode* head)
+{
+	if (!head || !head->next)
+		return head;
+	ListNode* fast = head->next;
+	ListNode* slow = head;
+	//ListNode* prev = NULL;
+	while (fast&&fast->next)
+	{
+		//prev = slow;
+		fast = fast->next->next;
+		slow = slow->next;
+	}
+	ListNode* shead = slow->next;
+	slow->next = NULL;
+	return merge(sortList(head), sortList(shead));
+
+}
+ListNode* merge(ListNode* left, ListNode* right)
+{
+	ListNode* temp =new ListNode(0);
+	ListNode* e = temp;
+	while (left && right)
+	{
+		if (left->val < right->val)
+		{
+			temp->next = left;
+			left = left->next;
+		}
+		else
+		{
+			temp->next = right;
+			right = right->next;
+		}
+		temp = temp->next;
+	}
+	if (left)
+		temp->next = left;
+	if(right)
+		temp->next = right;
+
+	return e->next;
+}
+#pragma endregion
+
+#pragma region 150. Evaluate Reverse Polish Notation
+int evalRPN(vector<string>& tokens) {
+	stack<int> num;
+	int result = 0;
+	for (int i = 0; i<tokens.size(); i++)
+	{
+		string temp = tokens[i];
+		if (checknum(temp))
+			num.push(stoint(temp));
+		else
+		{
+			int b = num.top();
+			num.pop();
+			int a = num.top();
+			num.pop();
+			if (temp == "+")
+				num.push(a + b);
+			else if (temp == "*")
+				num.push(a*b);
+			else if (temp == "-")
+				num.push(a - b);
+			else
+				num.push(a / b);
+		}
+	}
+	return num.top();
+
+
+}
+bool checknum(string s)
+{
+	if (s == "+" || s == "/" || s == "*" || s == "-")
+		return false;
+	else
+		return true;
+}
+int stoint(string s)
+{
+	if (s[0] == '-')
+		return 0 - stoi(s.substr(1));
+	else
+		return stoi(s);
+}
+#pragma endregion
+
+#pragma region 152. Maximum Product Subarray
+int maxProduct(vector<int>& nums)
+{
+	if (nums.size() == 0)
+		return 0;
+	int result = nums[0];
+	for (int i = 1, imin = nums[0], imax = nums[0]; i < nums.size(); i++)
+	{
+		if (nums[i] < 0)
+			swap(imin, imax);
+
+
+		imax = max(nums[i], nums[i] * imax);
+		imin = min(nums[i], nums[i] * imin);
+		result = max(result, imax);
+	}
+	return result;
+
+}
+#pragma endregion
+
+#pragma region 162. Find Peak Element
+int findPeakElement(vector<int>& nums)
+{
+	if (nums.size() == 1)
+		return 0;
+
+	for (int i = 0; i<nums.size() - 1; i++)
+	{
+		if (nums[i]>nums[i + 1])
+			return i;
+	}
+	return nums.size() - 1;
+}
+#pragma endregion
+
+#pragma region 200. Number of Islands
+int numIslands(vector<vector<char>>& grid)
+{
+	if (grid.size() == 0)
+		return 0;
+
+	int result = 0;
+	for (int i = 0; i<grid.size(); i++)
+	{
+		for (int j = 0; j<grid[0].size(); j++)
+		{
+			if (grid[i][j] == '1')
+			{
+				DFS(grid, i, j);
+				result++;
+			}
+
+		}
+	}
+	return result;
+}
+void DFS(vector<vector<char>>& grid, int x, int y)
+{
+	if (x<0 || x>grid.size() - 1 || y<0 || y>grid[0].size() - 1 || grid[x][y] == '0' || grid[x][y] == 'V')
+		return;
+	else
+	{
+		grid[x][y] = 'V';
+		DFS(grid, x - 1, y);
+		DFS(grid, x + 1, y);
+		DFS(grid, x, y - 1);
+		DFS(grid, x, y + 1);
+
+	}
+}
+#pragma endregion
+
+#pragma region 179. Largest Number
+static bool compares(const int& a, const int& b)
+{
+	return to_string(a)+to_string(b)<to_string(b)+to_string(a);
+}
+string largestNumber(vector<int>& nums)
+{
+	sort(nums.begin(), nums.end(),compares);
+	string result;
+
+	for (int i = nums.size()-1; i >= 0; i--)
+		result += to_string(nums[i]) + "";
+
+	return result;
+}
+#pragma endregion
+
+#pragma region 207. Course Schedule
+bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites)
+{
+	vector<unordered_set<int>> matrix(numCourses);
+	for (auto pre : prerequisites)
+		matrix[pre.second].insert(pre.first);
+
+	vector<int> d(numCourses, 0); // in-degree
+	for (int i = 0; i < numCourses; ++i)
+		for (auto it = matrix[i].begin(); it != matrix[i].end(); ++it)
+			++d[*it];
+
+	for (int j = 0, i; j < numCourses; ++j)
+	{
+		for (i = 0; i < numCourses && d[i] != 0; ++i); // find a node whose in-degree is 0
+
+		if (i == numCourses) // if not find
+			return false;
+
+		d[i] = -1;
+		for (auto it = matrix[i].begin(); it != matrix[i].end(); ++it)
+			--d[*it];
+	}
+
+	return true;
+}
+bool canFinishdfs(int numCourses, vector<pair<int, int>>& prerequisites) {
+	vector<unordered_set<int>> matrix(numCourses);
+	for (auto pre : prerequisites)
+		matrix[pre.first].insert(pre.second);
+
+	vector<bool> visited(numCourses, false);
+	vector<bool> onpath(numCourses, false);
+
+	for (int i = 0; i<numCourses; i++)
+	{
+		if (!visited[i] && cycledfs(matrix, i, visited, onpath))
+			return false;
+	}
+	return true;
+
+}
+
+bool cycledfs(vector<unordered_set<int>>& matrix, int& node, vector<bool>& visited,vector<bool>& onpath)
+{
+	if (visited[node])
+		return false;
+	visited[node] = onpath[node]=true;
+	for (int i : matrix[node])
+	{
+		if (onpath[i]||cycledfs(matrix, i, visited,onpath))
+			return true;
+	}
+	onpath[node] = false;
+	return false;
+}
+
+
+
+#pragma endregion
+
+#pragma region 210. Course Schedule II
+vector<int> findOrder(int numCourses, vector<pair<int, int>>& prerequisites)
+{
+	vector<unordered_set<int>> matrix(numCourses);
+	for (auto pre : prerequisites)
+		matrix[pre.second].insert(pre.first);
+	vector<int> result;
+	vector<int> d(numCourses, 0);
+	for (int i = 0; i<numCourses; i++)
+	{
+		for (auto it = matrix[i].begin(); it != matrix[i].end(); it++)
+			++d[*it];
+	}
+
+	for (int j = 0, i; j<numCourses; ++j)
+	{
+		for (i = 0; i<numCourses&&d[i] != 0; ++i);
+		if (i == numCourses)
+		{
+			result.clear();
+			return result;
+		}
+
+		d[i] = -1;
+		result.push_back(i);
+		for (auto it = matrix[i].begin(); it != matrix[i].end(); it++)
+			--d[*it];
+	}
+
+	return result;
+}
+#pragma endregion
+
+#pragma region 227. Basic Calculator II
+int calculate(string s)
+{
+	list<int> num;
+	queue<int> temp;
+	queue<char> op;
+	stack<char> md;
+	for (int i = 0; i<=s.size(); i++)
+	{
+		if (i<s.size()&&s[i] == ' ')
+			continue;
+		if (i<s.size()&&s[i] != '+'&&s[i] != '-'&&s[i] != '*'&&s[i] != '/')
+		{
+			temp.push(s[i]-'0');
+		}
+		else
+		{
+			int n = 0;
+			while (!temp.empty())
+			{
+				n = n * 10 + temp.front();
+				temp.pop();
+			}
+			if (!md.empty())
+			{
+				int s = num.back();
+				num.pop_back();
+				if (md.top() == '*')
+				{
+					s *= n;
+				}
+				else
+				{
+					s = s / n;
+				}
+				num.push_back(s);
+				md.pop();
+			}
+			else
+				num.push_back(n);
+			if (i < s.size())
+			{
+				if (s[i] == '*' || s[i] == '/')
+				{
+					md.push(s[i]);
+				}
+				else
+					op.push(s[i]);
+			}
+
+		}
+	}
+	while (!op.empty() && !num.empty())
+	{
+		int a = num.front();
+		num.pop_front();
+		if (op.front() == '+')
+			a = num.front() + a;
+		else
+			a =  a - num.front();
+		num.pop_front();
+		num.push_front(a);
+		op.pop();
+	}
+	return num.front();
+
+
+}
+#pragma endregion
+
+#pragma region 236. Lowest Common Ancestor of a Binary Tree
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
+{
+	unordered_map<TreeNode*, TreeNode*> map;
+	queue<TreeNode*> temp;
+	temp.push(root);
+	map[root] = NULL;
+	while (map.find(p) != map.end() && map.find(q) != map.end())
+	{
+		TreeNode* node = temp.front();
+		temp.pop();
+		if (node->left)
+		{
+			map[node->left] = node;
+			temp.push(node->left);
+		}
+		if (node->right)
+		{
+			map[node->right] = node;
+			temp.push(node->right);
+		}
+
+	}
+	unordered_set<TreeNode*> anc;
+
+	while (p)
+	{
+		anc.insert(p);
+		p = map[p];
+	}
+	while (anc.find(q) == anc.end())
+	{
+		q = map[q];
+	}
+
+	return q;
+}
+#pragma endregion
+
+#pragma region 279. Perfect Squares
+int numSquares(int n)
+{
+	vector<int> dp(n+1, INT_MAX);
+	dp[0] = 0;
+	for (int i = 1; i <= n; ++i)
+	{
+		for (int j = 1; j*j <= i; ++j)
+		{
+			dp[i] = min(dp[i], dp[i - j * j] + 1);
+		}
+	}
+	return dp[n];
+}
+#pragma endregion
+
+#pragma region 300. Longest Increasing Subsequence
+int lengthOfLIS(vector<int>& nums)
+{
+	if (nums.size() == 0)
+		return 0;
+	vector<int> dp(nums.size(), 1);
+	int result = 1;
+	for (int i = 1; i<nums.size(); i++)
+	{
+		for (int j = 0; j<i; j++)
+		{
+			if (nums[i]>nums[j])
+			{
+				dp[i] = max(dp[j] + 1, dp[i]);
+				result = max(result, dp[i]);
+			}
+		}
+	}
+
+	return result;
+}
+#pragma endregion
+
+#pragma region 322. Coin Change
+int coinChange(vector<int>& coins, int amount)
+{
+	vector<int> dp(amount + 1, amount + 1);
+	sort(coins.begin(), coins.end());
+	dp[0] = 0;
+
+	for (int i = 1; i <= amount; i++)
+	{
+		for (int c = 0; c<coins.size() && coins[c] <= i; c++)
+		{
+			dp[i] = min(dp[i], dp[i - coins[c]] + 1);
+		}
+	}
+	return dp[amount]>amount ? -1 : dp[amount];
+}
+#pragma endregion
+
+#pragma region 324. Wiggle Sort II
+void wiggleSort(vector<int>& nums)
+{
+	vector<int> copy(nums);
+	sort(copy.begin(), copy.end());
+	int j = nums.size() - 1;
+	int k = nums.size() % 2 == 0 ? nums.size() / 2 - 1 : nums.size() / 2;
+	for (int i = 0; i<nums.size(); i++)
+	{
+		if (i % 2 == 0)
+		{
+			nums[i] = copy[k];
+			k--;
+		}
+		else
+		{
+			nums[i] = copy[j];
+			j--;
+		}
+
+	}
+}
+#pragma endregion
+
+#pragma region 334. Increasing Triplet Subsequence
+bool increasingTriplet(vector<int>& nums)
+{
+	int a = INT_MAX, b = INT_MAX;
+	for (auto i : nums)
+	{
+		if (i <= a)
+			a = i;
+		else if (i <= b)
+			b = i;
+		else
+			return true;
+	}
+	return false;
+}
+#pragma endregion
+
+#pragma region shortest distance
+int shortestdistance(vector<string>& words, string word1, string word2)
+{
+	int p1 = -1, p2 = -1, result = INT_MAX;
+	for (int i=0;i<words.size();i++)
+	{
+		if (words[i] == word1)
+			p1 = i;
+		else if (words[i] == word2)
+			p2 = i;
+		if (p1 != -1 && p2 != -1)
+			result = min(result, abs(p1 - p2));
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 43. Multiply Strings
+string multiply(string num1, string num2)
+{
+	if (num1 == "0" || num2 == "0")
+		return "0";
+	vector<int> a;
+	vector<int> b;
+	if (num1.size() > num2.size())
+	{
+		string temp = num1;
+		num1 = num2;
+		num2 = temp;
+	}
+	string result;
+	for (auto i : num1)
+		a.push_back(i - '0');
+	for (auto j : num2)
+		b.push_back(j - '0');
+	vector<int> temp1;
+	vector<int> temp2;
+	for (int i = a.size() - 1; i >= 0; i--)
+	{
+		int remain = 0, off = 0;
+		temp1.clear();
+		for (int j = b.size() - 1; j >= 0; j--)
+		{
+			remain = (off + b[j] * a[i]) % 10;
+			off = (off + b[j] * a[i]) / 10;
+			temp1.insert(temp1.begin(), remain);
+		}
+		if (off)
+			temp1.insert(temp1.begin(), off);
+		if (temp2.empty())
+			temp2.assign(temp1.begin(), temp1.end());
+		else
+		{
+			result.insert(result.begin(), '0' + temp2.back());
+			temp2.pop_back();
+			vector<int> temp3;
+			int re = 0, of = 0;
+			int s = temp2.size();
+			for (int k = 0; k<temp1.size(); k++)
+			{
+				if (s - k - 1<0)
+				{
+					re = (of + temp1[temp1.size() - k - 1]) % 10;
+					of = (of + temp1[temp1.size() - k - 1]) / 10;
+					temp3.insert(temp3.begin(), re);
+				}
+
+				else
+				{
+					re = (of + temp1[temp1.size() - k - 1] + temp2[temp2.size() - k - 1]) % 10;
+					of = (of + temp1[temp1.size() - k - 1] + temp2[temp2.size() - k - 1]) / 10;
+					temp3.insert(temp3.begin(), re);
+				}
+
+			}
+			if (of)
+				temp3.insert(temp3.begin(), of);
+			temp2.assign(temp3.begin(), temp3.end());
+		}
+
+	}
+	for (int i = temp2.size() - 1; i >= 0; i--)
+	{
+		result.insert(result.begin(), '0' + temp2[i]);
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 6. ZigZag Conversion
+string convert(string s, int numRows)
+{
+	if (numRows<2)
+		return s;
+	string result;
+	vector<vector<char>> total;
+	vector<char> temp(numRows);
+	vector<char> ontime(temp);
+	for (int i = 0; i<s.size(); i++)
+	{
+		if ((i + 1) % (numRows * 2 - 2) == numRows)
+		{
+			ontime[numRows - 1] = s[i];
+			total.push_back(ontime);
+			ontime.clear();
+			ontime.assign(temp.begin(), temp.end());
+		}
+		else if ((i + 1) % (numRows * 2 - 2)>0&&(i + 1) % (numRows * 2 - 2)<numRows)
+		{
+			ontime[i % (numRows * 2 - 2)] = s[i];
+			if (i == s.size() - 1)
+			{
+				total.push_back(ontime);
+			}
+		}
+		else
+		{
+			ontime[2 * numRows - i % (numRows * 2 - 2) - 2] = s[i];
+			total.push_back(ontime);
+			ontime.clear();
+			ontime.assign(temp.begin(), temp.end());
+		}
+
+	}
+
+	for (int i = 0; i<numRows; i++)
+	{
+		for (int j = 0; j<total.size(); j++)
+		{
+			if (total[j][i])
+				result += total[j][i];
+		}
+	}
+	cout << total.size();
+	return result;
+}
+#pragma endregion
 
 
 

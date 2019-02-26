@@ -51,6 +51,31 @@ int findMinGates(vector<int> arrivals, vector<int> departures, int flights) {
 
 }
 
+int findmaxave(vector<vector<string>> scores)
+{
+	unordered_map<string, vector<int>> mapping;
+	int result = INT_MIN;
+	for (int i = 0; i < scores.size(); i++)
+	{
+		if (mapping.find(scores[i][0]) == mapping.end())
+		{
+			vector<int> temp;
+			temp.push_back(stoi(scores[i][1]));
+			temp.push_back(1);
+			mapping.insert(make_pair(scores[i][0], temp));
+		}
+		else
+		{
+			mapping[scores[i][0]][0] += stoi(scores[i][1]);
+			mapping[scores[i][0]][1]++;
+		}
+	}
+	for (auto i : mapping)
+	{
+		result = max(result, i.second[0] / i.second[1]);
+	}
+	return result;
+}
 
 void swap2(int *p, int *q)
 {
@@ -99,10 +124,48 @@ auto func(int i) ->int
 	return i;
 }
 
+int compress(vector<char>& chars) {
+	int l = 0, i = 0;
+	for (int j = 0; j<chars.size(); j++)
+	{
+		if (j + 1 == chars.size() || chars[j + 1] != chars[j])
+		{
+			chars[l++] = chars[j];
+			if (i<j)
+			{
+				for (auto c : to_string(j - i + 1))
+					chars[l++] = c;
+			}
+			i = j + 1;
+		}
+	}
+	return l;
+
+}
+
+string reverseString1(string s) {
+	for (int i = 0; i<s.size() / 2; i++)
+	{
+		char temp = s[i];
+		s[i] = s[s.size() - 1 - i];
+		s[s.size() - 1 - i] = temp;
+	}
+	return s;
+}
+
+int testr(int a)
+{	
+	
+	int b = 3;
+	return a = b;
+}
+
+
+
 int main()
 {
-
-
+	//vector<vector<string>> test{ {"abc","19"},{"bcd","14"},{"abc","59"} };
+	//cout << findmaxave(test);
 
 	//cout.precision(4);
 	//cout << fixed;
@@ -545,9 +608,78 @@ int main()
 	//queensr(a,count,0);
 	//cout << count;
 
-cout << lpdp("abbc");
+	//cout << lpdp("abbc");
+
+	//TreeNode* root = new TreeNode(5);
+	//root->left = new TreeNode(1);
+	//root->right = new TreeNode(4);
+	//root->right->left = new TreeNode(3);
+	//root->right->right = new TreeNode(6);
+
+	//cout << isValidBSTW(root);
+
+	//vector<vector<char>> board{
+	//	{'X', 'O', 'X', 'O', 'X', 'O'},
+	//	{'O', 'X', 'O', 'X', 'O', 'X'},
+	//	{'X', 'O', 'X', 'O', 'X', 'O'},
+	//	{'O', 'X', 'O', 'X', 'O', 'X'}};
+
+	//solve(board);
+
+	//string s = "aaabac";
+	//vector<vector<string>> result = partition(s);
+	//for (auto&i : result)
+	//{
+	//	for (auto&j : i)
+	//		cout << j << " ";
+	//	cout << endl;
+	//}
+
+	//ListNode a(3);
+	//ListNode b(5);
+	//ListNode c(1);
+	//ListNode d(7);
+	//ListNode e(4);
+	//a.next = &b;
+	//b.next = &c;
+	//c.next = &d;
+	//d.next = &e;
+	//
+	//ListNode* x = sortList(&a);
+	//
+	//x->display();
+	
+
+	//vector<int> s{ 4,2,6,33,5,2 };
+	//cout << largestNumber(s);
+
+	//int a = 9;
+	//cout << testr(a);
 
 
+	//vector<pair<int, int>> course{ {0,1},{2,1} };
+	//int n = 3;
+	//vector<int> r=findOrder(n, course);
+
+	//string a = "14-3/2";
+	//cout << calculate(a);
+
+	//vector<char> s{ 'a','a','a','a','b' };
+	//cout << compress(s);
+
+	//string a = "abc";
+	//cout << reverseString1(a);
+
+	//vector<int> t{ 2,3,1,9,7,4,0 };
+	//nextPermutation1(t);
+
+
+
+	//string num1 = "123", num2 = "43";
+	//cout << multiply(num1, num2);
+
+	//string s = "PAYPALISHIRING";
+	//cout << convert(s,4);
 
 
 

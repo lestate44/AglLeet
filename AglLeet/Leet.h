@@ -43,6 +43,7 @@ struct TreeLinkNode {
 	TreeLinkNode(int x) : val(x), left(NULL), right(NULL), next(NULL) {};
 };
 #pragma endregion
+
 #pragma region struct point
 struct point
 {
@@ -51,7 +52,6 @@ struct point
 	point(int x, int y) :x(x), y(y) {};
 };
 #pragma endregion
-
 
 #pragma region Interval Struct
 struct Interval
@@ -318,6 +318,7 @@ int uniquePaths(int m, int n);
 
 #pragma region 31. Next Permutation
 void nextPermutation(vector<int>& nums);
+void nextPermutation1(vector<int>& nums);
 #pragma endregion
 
 #pragma region 94. Binary Tree Inorder Traversal
@@ -542,6 +543,115 @@ void queendisplay(const int(&a)[8][8]);
 
 #pragma region longestpalindromedp
 string lpdp(string s);
+#pragma endregion
+
+#pragma region 98. Validate Binary Search Tree
+bool isValidBST(TreeNode* root);
+void bsthelper(TreeNode* root, vector<int>& v);
+bool isValidBSTW(TreeNode* root);
+#pragma endregion
+
+#pragma region 130.Surrounded Region
+void solve(vector<vector<char>>& board);
+void display(vector<vector<char>>& board);
+void update(vector<vector<char>>& board, int i, int j);
+#pragma endregion
+
+#pragma region 131. Palindrome Partitioning
+vector<vector<string>> partition(string s);
+vector<vector<string>> partition2(string& s);
+void partition2(vector<vector<string>>& result, vector<string> par, string& s, int start);
+bool ispal(string& s, int l, int r);
+void partition(vector<vector<string>>& result, vector<string>part, string& s, int start);
+#pragma endregion
+
+#pragma region 134. Gas Station
+int canCompleteCircuit(vector<int>& gas, vector<int>& cost);
+#pragma endregion
+
+#pragma region 139. Word Break
+bool wordbreak(string s, vector<string>& wordDict);
+bool wordbreakbf(string s, vector<string>& wordDict);
+bool wordbreakbfhelper(string s, unordered_set<string>& wordDict);
+bool wordbreakbfs(string s, vector<string>& wordDict);
+#pragma endregion
+
+#pragma region 148. Sort List
+ListNode* sortList(ListNode* head);
+ListNode* merge(ListNode* left, ListNode* right);
+#pragma endregion
+
+#pragma region 150. Evaluate Reverse Polish Notation
+int evalRPN(vector<string>& tokens);
+bool checknum(string s);
+int stoint(string s);
+#pragma endregion
+
+#pragma region 152. Maximum Product Subarray
+int maxProduct(vector<int>& nums);
+#pragma endregion
+
+#pragma region 162. Find Peak Element
+int findPeakElement(vector<int>& nums);
+#pragma endregion
+
+#pragma region 200. Number of Islands
+int numIslands(vector<vector<char>>& grid);
+void DFS(vector<vector<char>>& grid, int x, int y);
+#pragma endregion
+
+#pragma region 179. Largest Number
+string largestNumber(vector<int>& nums);
+#pragma endregion
+
+#pragma region 207. Course Schedule
+bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites);
+bool canFinishdfs(int numCourses, vector<pair<int, int>>& prerequisites);
+bool cycledfs(vector<unordered_set<int>>& matrix, int& node, vector<bool>& visited,vector<bool>& onpath);
+#pragma endregion
+
+#pragma region 210. Course Schedule II
+vector<int> findOrder(int numCourses, vector<pair<int, int>>& prerequisites);
+#pragma endregion
+
+#pragma region 227. Basic Calculator II
+int calculate(string s);
+#pragma endregion
+
+#pragma region 236. Lowest Common Ancestor of a Binary Tree
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q);
+#pragma endregion
+
+#pragma region 279. Perfect Squares
+int numSquares(int n);
+#pragma endregion
+
+#pragma region 300. Longest Increasing Subsequence
+int lengthOfLIS(vector<int>& nums);
+#pragma endregion
+
+#pragma region 322. Coin Change
+int coinChange(vector<int>& coins, int amount);
+#pragma endregion
+
+#pragma region 324. Wiggle Sort II
+void wiggleSort(vector<int>& nums);
+#pragma endregion
+
+#pragma region 334. Increasing Triplet Subsequence
+bool increasingTriplet(vector<int>& nums);
+#pragma endregion
+
+#pragma region shortest distance
+int shortestdistance(vector<string>& words, string word1, string word2);
+#pragma endregion
+
+#pragma region 43. Multiply Strings
+string multiply(string num1, string num2);
+#pragma endregion
+
+#pragma region 6. ZigZag Conversion
+string convert(string s, int numRows);
 #pragma endregion
 
 
