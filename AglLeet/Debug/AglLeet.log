@@ -1,4 +1,8 @@
-﻿  Leet.cpp
+﻿  AlgLeet.cpp
+d:\github\algleet\aglleet\aglleet\algleet.cpp(59): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\algleet.cpp(130): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\algleet.cpp(148): warning C4018: '<': signed/unsigned mismatch
+  Leet.cpp
 d:\github\algleet\aglleet\aglleet\leet.cpp(196): warning C4018: '<': signed/unsigned mismatch
 d:\github\algleet\aglleet\aglleet\leet.cpp(206): warning C4018: '>=': signed/unsigned mismatch
 d:\github\algleet\aglleet\aglleet\leet.cpp(221): warning C4018: '<': signed/unsigned mismatch
@@ -105,6 +109,11 @@ d:\github\algleet\aglleet\aglleet\leet.cpp(4323): warning C4018: '<': signed/uns
 d:\github\algleet\aglleet\aglleet\leet.cpp(4377): warning C4018: '<': signed/unsigned mismatch
 d:\github\algleet\aglleet\aglleet\leet.cpp(4417): warning C4018: '<': signed/unsigned mismatch
 d:\github\algleet\aglleet\aglleet\leet.cpp(4446): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(4507): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(4545): warning C4018: '<': signed/unsigned mismatch
+d:\github\algleet\aglleet\aglleet\leet.cpp(4645): warning C4018: '<': signed/unsigned mismatch
+  tt.cpp
+  Generating Code...
 d:\github\algleet\aglleet\aglleet\leet.cpp(75): warning C4715: 'twosummap': not all control paths return a value
 d:\github\algleet\aglleet\aglleet\leet.cpp(1390): warning C4715: 'plusOne': not all control paths return a value
   AglLeet.vcxproj -> D:\GitHub\AlgLeet\AglLeet\Debug\AglLeet.exe

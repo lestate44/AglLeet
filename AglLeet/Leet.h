@@ -654,5 +654,66 @@ string multiply(string num1, string num2);
 string convert(string s, int numRows);
 #pragma endregion
 
+#pragma region 67. Add Binary
+string addBinary(string a, string b);
+#pragma endregion
+
+#pragma region 60. Permutation Sequence
+string getPermutation(int n, int k);
+#pragma endregion
+
+#pragma region 40. Combination Sum II
+vector<vector<int>> combinationSum2(vector<int>& candidates, int target);
+void combinationSum2helper(vector<vector<int>>& result, vector<int>& candidates, int target, int index, vector<int>& temp);
+#pragma endregion
+
+#pragma region 24. Swap Nodes in Pairs
+ListNode* swapPairs(ListNode* head);
+#pragma endregion
+
+#pragma region 16. 3Sum Closest
+int threeSumClosest(vector<int>& nums, int target);
+#pragma endregion
+
+#pragma region 12. Integer to Roman
+string intToRoman(int num);
+#pragma endregion
+
+#pragma region 61. Rotate List
+ListNode* rotateRight(ListNode* head, int k);
+#pragma endregion
+
+#pragma region 74. Search a 2D Matrix
+bool searchMatrix2(vector<vector<int>>& matrix, int target);
+#pragma endregion
+
+#pragma region 77. Combinations
+vector<vector<int>> combine(int n, int k);
+void combinhelp(vector<vector<int>>& result, vector<int>& temp, int index, vector<int>& cand, int& k);
+#pragma endregion
+
+#pragma region 71. Simplify Path
+string simplifyPath(string path);
+#pragma endregion
+
+
+#pragma region 59. Spiral Matrix II
+vector<vector<int>> generateMatrix2(int n);
+#pragma endregion
+
+#pragma region 54. Spiral Matrix
+vector<int> spiralOrder(vector<vector<int>>& matrix);
+#pragma endregion
+
+#pragma region 119. Pascal   
+vector<int> getRow(int rowIndex);
+#pragma endregion
+
+
+
+
+
+
+
 
 #endif

@@ -12,6 +12,7 @@
 #include <set>
 #include <sstream>
 #include <map>
+#include <stack>
 
 struct Base {
 	virtual void print(int x = 1) {
@@ -164,6 +165,24 @@ int testr(int a)
 
 int main()
 {
+	
+	//string test = "/.//c";
+	//cout << simplifyPath(test);
+	
+
+	//ListNode a(1);
+	//ListNode b(2);
+	//ListNode c(3);
+	//ListNode d(4);
+	//ListNode e(5);
+	//a.next = &b;
+	//b.next = &c;
+	//c.next = &d;
+	//d.next = &e;
+	//ListNode* node = &a;
+	//ListNode* test = rotateRight(node,2);
+
+
 	//vector<vector<string>> test{ {"abc","19"},{"bcd","14"},{"abc","59"} };
 	//cout << findmaxave(test);
 
@@ -682,9 +701,22 @@ int main()
 	//cout << convert(s,4);
 
 
+	//vector<string> test{ "a","b","ac", "banana", "app", "appl", "ap", "apply", "apple" };
+	//sort(test.begin(), test.end());
+	//for (auto i : test)
+	//cout << i<<endl;
 
+//stack<string> st;
+//string s;
+//st.push(s);
+//cout << st.size();
+//st.push(s);
+//cout << st.size();
 
+//vector<vector<int>> s{ {1,2,3,4},{5,6,7,8},{9,10,11,12} };
+//vector<int> r = spiralOrder(s);
 
+vector<int> s = getRow(2);
 
 
 }

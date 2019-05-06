@@ -4454,8 +4454,400 @@ string convert(string s, int numRows)
 }
 #pragma endregion
 
+#pragma region 67. Add Binary
+string addBinary(string a, string b)
+{
+	int c = 0;
+	int al = a.size() - 1, bl = b.size() - 1;
+	string result;
+	while (al >= 0 || bl >= 0 || c == 1)
+	{
+		c = c + (al >= 0 ? a[al--] - '0' : 0) + (bl >= 0 ? b[bl--] - '0' : 0);
+		result.insert(result.begin(), c % 2 + '0');
+		c = c / 2;
+	}
+
+	return result;
+}
+#pragma endregion
+
+#pragma region 60. Permutation Sequence
+string getPermutation(int n, int k)
+{
+	string result;
+	vector<int> facto(10, 1);
+	for (int i = 1; i<10; i++)
+		facto[i] = facto[i - 1] * i;
+	string s = "123456789";
+	k--;
+	for (int i = n; i>0; i--)
+	{
+		int j = k / facto[i - 1];
+		k %= facto[i - 1];
+		result += s[j];
+		s.erase(j, 1);
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 40. Combination Sum II
+vector<vector<int>> combinationSum2(vector<int>& candidates, int target)
+{
+	vector<vector<int>> result;
+	vector<int> temp;
+	sort(candidates.begin(), candidates.end());
+	combinationSum2helper(result, candidates, target, 0, temp);
+	return result;
+}
+void combinationSum2helper(vector<vector<int>>& result, vector<int>& candidates, int target, int index, vector<int>& temp)
+{
+	if (target == 0)
+		result.push_back(temp);
+	for (int i = index; i<candidates.size(); i++)
+	{
+		if (candidates[i]>target)
+			return;
+		if (i&&candidates[i] == candidates[i - 1] && i>index) continue;
+		temp.push_back(candidates[i]);
+		combinationSum2helper(result, candidates, target - candidates[i], i + 1, temp);
+		temp.pop_back();
+	}
+}
+#pragma endregion
+
+#pragma region 24. Swap Nodes in Pairs
+ListNode* swapPairs(ListNode* head)
+{
+	if (!head || !head->next)
+		return head;
+	ListNode* node = new ListNode(0);
+	ListNode* prev = node;
+	prev->next = head;
+	while (head&&head->next)
+	{
+		ListNode* temp = head->next;
+		prev->next = head->next;
+		head->next = head->next->next;
+		prev->next->next = head;
+		prev = head;
+		head = head->next;
+	}
+	return node->next;
+}
+#pragma endregion
+
+#pragma region 16. 3Sum Closest
+int threeSumClosest(vector<int>& nums, int target)
+{
+	int result = nums[0] + nums[1] + nums[2];
+	sort(nums.begin(), nums.end());
+	for (int i = 0; i<nums.size() - 2; i++)
+	{
+		int l = i + 1, r = nums.size() - 1;
+		while (l<r)
+		{
+			int temp = nums[l] + nums[r] + nums[i];
+			if (abs(temp - target)<abs(result - target))
+				result = temp;
+			if (temp - target<0)
+			{
+				l++;
+				while (nums[l] == nums[l - 1] && l<r)
+					l++;
+			}
+			else if (temp - target>0)
+			{
+				r--;
+				while (nums[r + 1] == nums[r] && l<r)
+					r--;
+			}
+			else
+				return target;
+		}
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 12. Integer to Roman
+string intToRoman(int num)
+{
+	vector<string> M = { "", "M", "MM", "MMM" };
+	vector<string> C = { "", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM" };
+	vector<string> X = { "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC" };
+	vector<string> I = { "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
+	return M[num / 1000] + C[(num % 1000) / 100] + X[(num % 100) / 10] + I[num % 10];
+}
+#pragma endregion
+
+#pragma region 61. Rotate List
+ListNode* rotateRight(ListNode* head, int k)
+{
+	if (!head)
+		return NULL;
+	int len = 1;
+	ListNode* node = head;
+	while (node->next)
+	{
+		len++;
+		node = node->next;
+	}
+	node->next = head;
+	ListNode* new_tail = head;
+	for (int i = 0; i < len - k % len - 1; i++)
+		new_tail = new_tail->next;
+	ListNode* new_head = new_tail->next;
+	new_tail->next = NULL;
+	return new_head;
+}
+#pragma endregion
+
+#pragma region 74. Search a 2D Matrix
+bool searchMatrix2(vector<vector<int>>& matrix, int target)
+{
+	if (matrix.size() == 0)
+		return false;
+	int m = matrix.size(), n = matrix[0].size();
+	int l = 0, r = m * n - 1;
+	while (l <= r)
+	{
+		int mid = l + (r - l) / 2;
+		if (matrix[mid / n][mid%n] == target)
+			return true;
+		if (matrix[mid / n][mid%n]<target)
+			l = mid + 1;
+		else
+			r = mid - 1;
+	}
+	return false;
+}
+#pragma endregion
+
+#pragma region 77. Combinations
+vector<vector<int>> combine(int n, int k)
+{
+	vector<int> cand;
+	for (int i = 1; i <= n; i++)
+		cand.push_back(i);
+	vector<int> temp;
+	vector<vector<int>> result;
+	combinhelp(result, temp, 0, cand, k);
+	return result;
+}
+void combinhelp(vector<vector<int>>& result, vector<int>& temp, int index, vector<int>& cand, int& k)
+{
+	if (temp.size() == k)
+	{
+		result.push_back(temp);
+		return;
+	}
+	for (int i = index; i<cand.size(); i++)
+	{
+		temp.push_back(cand[i]);
+		combinhelp(result, temp, i + 1, cand, k);
+		temp.pop_back();
+	}
+}
+#pragma endregion
+
+#pragma region 71. Simplify Path
+string simplifyPath(string path)
+{
+	stack<string> st;
+	string result, val;
+	istringstream ss(path);
+	while (getline(ss, val, '/'))
+	{
+		if (val.size() == 0 || val == ".")
+			continue;
+		if (val == "..")
+		{
+			if (!st.empty())
+				st.pop();
+		}
+		else
+			st.push(val);
+	}
+	if (st.empty())
+		result = "/";
+	while (!st.empty())
+	{
+		result = "/" + st.top() + result;
+		st.pop();
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 59. Spiral Matrix II
+vector<vector<int>> generateMatrix2(int n) {
+	vector<vector<int>> result(n, vector<int>(n, 0));
+	int start = 1;
+	int ct = 1;
+	int row = 0, col = 0;
+	while (start <= n * n)
+	{
+
+		if (ct % 4 == 1)
+		{
+			result[row][col++] = start;
+			start++;
+		}
+		else if (ct % 4 == 2)
+		{
+			result[row++][col] = start;
+			start++;
+		}
+		else if (ct % 4 == 3)
+		{
+			result[row][col--] = start;
+			start++;
+		}
+		else
+		{
+			result[row--][col] = start;
+			start++;
+		}
+		if (col >= n)
+		{
+			ct++;
+			col--;
+			row++;
+		}
+		else if (row >= n)
+		{
+			ct++;
+			row--;
+			col--;
+		}
+		else if (col<0)
+		{
+			col++;
+			ct++;
+			row--;
+		}
+		else if (row<0)
+		{
+			row++;
+			ct++;
+			col++;
+		}
+		else
+		{
+			if (result[row][col] != 0)
+			{
+				if (ct % 4 == 1)
+				{
+					col--;
+					row++;
+				}
+				else if (ct % 4 == 2)
+				{
+					row--;
+					col--;
+				}
+				else if (ct % 4 == 3)
+				{
+
+					row--;
+					col++;
+				}
+				else
+				{
+					row++;
+					col++;
+				}
+				ct++;
+			}
+
+		}
+
+	}
+
+	return result;
 
 
+
+}
+#pragma endregion
+
+
+#pragma region 54. Spiral Matrix
+vector<int> spiralOrder(vector<vector<int>>& matrix)
+{
+	vector<int> result;
+	if (matrix.size() == 0)
+		return result;
+	int len = matrix.size();
+	int wid = matrix[0].size();
+	int cur = 1;
+	int rowstart = 0, rowend = len - 1;
+	int colstart = 0, colend = wid - 1;
+
+	while (cur <= len * wid)
+	{
+		for (int i = colstart; i <= colend; i++)
+		{
+			result.push_back(matrix[rowstart][i]);
+			cur++;
+		}
+		rowstart++;
+		if (cur>len*wid)
+			break;
+		for (int i = rowstart; i <= rowend; i++)
+		{
+			result.push_back(matrix[i][colend]);
+			cur++;
+		}
+		colend--;
+		if (cur>len*wid)
+			break;
+
+		for (int i = colend; i >= colstart; i--)
+		{
+			result.push_back(matrix[rowend][i]);
+			cur++;
+		}
+		rowend--;
+		if (cur>len*wid)
+			break;
+		for (int i = rowend; i >= rowstart; i--)
+		{
+			result.push_back(matrix[i][colstart]);
+			cur++;
+		}
+		colstart++;
+
+
+	}
+	return result;
+}
+#pragma endregion
+
+#pragma region 119. Pascal  
+vector<int> getRow(int rowIndex)
+{
+	vector<int> pre{ 1 };
+	vector<int> result;
+	if (rowIndex == 0)
+		return pre;
+	for (int i = 1; i <= rowIndex; i++)
+	{
+		swap(pre, result);
+		result.clear();
+		for (int j = 0; j <= i; j++)
+		{
+			if (j == 0 || j == i)
+				result.push_back(1);
+			else
+				result.push_back(pre[j - 1] + pre[j]);
+		}
+
+	}
+	return result;
+}
+#pragma endregion
 
 
 
