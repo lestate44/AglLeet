@@ -14,6 +14,51 @@
 #include <map>
 #include <stack>
 
+
+const double PI = 3.14159;
+
+
+
+
+class Shapes   //抽象类
+{
+protected:
+	int x, y;
+public:
+	void setvalue(int d, int w = 0) { x = d; y = w; }
+	virtual void disp() = 0;//纯虚函数
+	void dispx()
+	{
+		cout << x;
+	}
+};
+
+class Square :public Shapes
+{
+public:
+	Square() = default;
+	Square(int a, int b)
+	{
+		x = a;
+		y = b;
+	}
+	void dispx() 
+	{
+		cout << x << y << endl;
+	}
+	void disp() {
+		cout << "矩形面积:" << x * y << endl;
+	}
+};
+
+class Circle :public Shapes {
+public:
+	void disp() {
+		cout << "圆面积:" << PI * x*x << endl;
+	}
+};
+
+
 struct Base {
 	virtual void print(int x = 1) {
 		std::cout << "Base:" << x;
@@ -161,10 +206,309 @@ int testr(int a)
 	return a = b;
 }
 
+int sum(int&i, int&j)
+{
+	return i + j;
+}
 
+class TrieNode {
+public:
+	bool word;
+	TrieNode* children[26];
+	TrieNode() {
+		word = false;
+		memset(children, NULL, sizeof(children));
+	}
+};
+
+
+class node
+{
+public:
+	node * next[26];
+	bool hasword;
+	node() {
+		hasword = false;
+		for (auto &a : next)
+			a = NULL;
+	};
+
+};
+class WordDictionary {
+
+public:
+	/** Initialize your data structure here. */
+	WordDictionary() {
+
+	}
+
+	/** Adds a word into the data structure. */
+	void addWord(string word) {
+		node* temp = root;
+		for (char c : word)
+		{
+			if (!temp->next[c - 'a'])
+			{
+				temp->next[c - 'a'] = new node();
+			}
+			temp = temp->next[c - 'a'];
+			cout << c - 'a' << "add" << endl;
+		}
+		temp->hasword = true;
+	}
+
+	/** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
+	bool search(string word) {
+		node* temp = root;
+		return searchdfs(word, temp,0);
+	}
+private:
+	node * root = new node();
+	bool searchdfs(const string& s, node* n, int start)
+	{
+		for (int i = start; n&&i<s.size(); i++)
+		{
+			if (s[i] != '.')
+			{
+				n = n->next[s[i] - 'a'];
+				cout << s[i] - 'a' << endl;
+			}
+			else
+			{
+				node* tmp = n;
+				for (int j = 0; j<26; j++)
+				{
+					n = tmp->next[j];
+					if (n&&searchdfs(s, n, i + 1))
+					{
+						cout << j << endl;
+						return true;
+					}
+
+				}
+			}
+		}
+		return n && n->hasword;
+	}
+	bool search(const char* word, node* tnode) {
+		for (int i = 0; word[i] && tnode; i++) {
+			if (word[i] != '.') {
+				tnode = tnode->next[word[i] - 'a'];
+			}
+			else {
+				node* tmp = tnode;
+				for (int j = 0; j < 26; j++) {
+					tnode = tmp->next[j];
+					if (search(word + i + 1, tnode)) {
+						cout << j;
+						return true;
+					}
+				}
+			}
+		}
+		return tnode && tnode->hasword;
+	}
+
+
+
+
+
+};
+
+ListNode* recurr(ListNode* head)
+{
+	if (!head)
+		return NULL;
+	ListNode* pre = head;
+	ListNode* cur = head->next;
+	if (!cur||!cur->next)
+		return head;
+	while (cur->next)
+	{
+		pre = pre->next;
+		cur = cur->next;
+	}
+	ListNode* temp = head->next;
+	pre->next = NULL;
+	head->next = cur;
+	head->next->next = recurr(temp);
+	return head;
+}
+void recorderList(ListNode* head)
+{
+	recurr(head);
+}
+
+vector<string> getsingle(string a, string b)
+{
+	string z = "abc def hij";
+	stringstream  ss(z);
+	vector<string> result;
+	string temp;
+	while (ss>>temp)
+	{
+
+		result.push_back(temp);
+	}
+	return result;
+}
+int numMatchingSubseq(string S, vector<string>& words) {
+	vector<pair<int, int>> sall[128];
+	
+	vector<vector<pair<int, int>>> all(128,vector<pair<int,int>>());
+	auto z = all[0];
+	int res = 0, n = words.size();
+	for (int i = 0; i < n; i++) {
+		all[words[i][0]].emplace_back(i, 1);
+	}
+	for (char c : S) {
+		auto vect = all[c];
+		all[c].clear();
+		for (auto it : vect) {
+			if (it.second == words[it.first].size()) ++res;
+			else all[words[it.first][it.second++]].push_back(it);
+		}
+	}
+	return res;
+}
 
 int main()
 {
+	cout << "hello";
+	//vector<vector<bool>> matrix(1000, vector<bool>(1001, false));
+	//cout << matrix[0][0];
+	//char a = 'a';
+	//int b = a;
+	//cout << b;
+
+	//string a = "cadddaaccz";
+	//cout << xiaoxiaole(a);
+
+
+
+
+
+	//char a = 'f';
+	//int b = a - 'a';
+	//cout << b;
+
+
+
+	//string S = "abcde";
+	//vector<string>words = { "a", "bb", "acd", "ace" };
+	//cout<<numMatchingSubseq(S,words);
+
+	//string a = "ab ";
+	//string b = "d";
+	//stringstream ss(a);
+	//string temp;
+	//while (ss>>temp)
+	//{
+	//	
+	//	cout << temp << endl;
+	//}
+
+
+	//vector<string> result = getsingle(a, b);
+	//for (auto &i : result)
+	//	cout << i;
+	//cout << result.size();
+
+
+	//printf("1/2= %f", (float)(1 / 2));
+	//char c = 255;
+	//if (c > 10)
+	//	cout << c;
+	//ListNode* a = new ListNode(1);
+	//a->add(2);
+	//a->add(3);
+	//a->add(4);
+	//a->add(5);
+	//a->add(6);
+
+	//a->display();
+	//recorderList(a);
+	//a->display();
+	//int a = 3;
+	//int b = 4;
+	//int c = 5;
+
+	//int* pa = &a;
+	//int* pb = &b;
+	//int* pc = &c;
+	//pa = pb;
+	//*pa = 9;
+	//cout << *pb;
+
+
+
+	//TreeNode* t1 = new TreeNode(1);
+	//TreeNode* t2 = new TreeNode(2);
+	//TreeNode* t3 = t1;
+	//t3->left = t2;
+	//cout << t1->left->val;
+
+	//string a = "abcc";
+	//string b = "abc";
+	//cout << (a > b);
+	//reversestr(88);
+	//WordDictionary ss;
+	//ss.addWord("aaa");
+	//ss.search("a.");
+
+	//int a = 65;
+	//char b = char(a);
+	//cout << b;
+
+	//char a = 'a';
+	//int s = int(a);
+	//cout << s;
+
+	//unionfind uf(5);
+	//uf.us(1, 2);
+	//uf.us(2, 3);
+	//uf.us(3, 4);
+	//uf.us(4, 5);
+	////uf.unionset(1, 2);
+	////uf.unionset(2, 3);
+	////uf.unionset(3, 4);
+	////uf.unionset(4, 5);
+	//
+	//uf.print();
+	//cout << endl;
+	//cout << uf.rootf(5) << endl;
+	//uf.print();
+	//cout << endl;
+	//uf.rootf(5);
+	//uf.print();
+
+
+
+
+
+
+
+
+
+
+	//cout << numSquaresbfs(12);
+
+
+	//Shapes *ptr[2]; //定义对象指针数组
+	//Square s1(4,5);
+	//Shapes* sp1 = &s1;
+	//sp1->dispx();
+	//Circle c1;
+	//ptr[0] = &s1;
+	////ptr[0]->setvalue(10, 5);
+	//ptr[0]->disp();
+	//ptr[1] = &c1;
+	//ptr[1]->setvalue(10);
+	//ptr[1]->disp();
+	//return 0;
+
+
+	//cout << sum(1, 2);
 	
 	//string test = "/.//c";
 	//cout << simplifyPath(test);
@@ -716,7 +1060,9 @@ int main()
 //vector<vector<int>> s{ {1,2,3,4},{5,6,7,8},{9,10,11,12} };
 //vector<int> r = spiralOrder(s);
 
-vector<int> s = getRow(2);
+//vector<int> s = getRow(2);
+
+
 
 
 }

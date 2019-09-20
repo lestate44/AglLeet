@@ -6,6 +6,94 @@
 
 using namespace std;
 
+
+#pragma region unionfind
+class unionfind
+{
+	vector<int> root;
+	vector<int> rank;
+
+public:
+	unionfind(int s) :root(s+1),rank(s+1)
+	{
+		for (int i=0;i<root.size();i++)
+		{
+			root[i] = i;
+			rank[i] = 0;
+		}
+
+	}
+	int rootf(int i)
+	{
+		while (i != root[i])
+		{
+			root[i] = root[root[i]];
+			i = root[i];
+		}
+		return i;
+	}
+	int fr(int j)
+	{
+		int i = j;
+		while (i != root[i])
+			i = root[i];
+		compression(i, j);
+		return i;
+	}
+	void compression(int r, int i)
+	{
+		while (i != root[i])
+		{
+			root[root[i]] = r;
+			i = root[i];
+
+		}
+	}
+	int find(int f)
+	{
+		if (f != root[f])
+			root[f] = find(root[f]);
+		return root[f];
+	}
+	void us(int a, int b)
+	{
+		root[b] = a;
+
+	}
+	bool unionset(int a, int b)
+	{
+		int ra = find(a), rb = find(b);
+		if (ra == rb)
+			return false;
+
+		if (rank[ra] > rank[rb])
+			root[rb] = ra;
+		else if (rank[ra] < rank[rb])
+			root[ra] = rb;
+		else
+		{
+			root[ra] = rb;
+			rank[rb]++;
+		}
+		return true;
+	}
+	void print()
+	{
+		for (int i=0;i< root.size();i++)
+			cout << i << ",";
+		cout << endl;
+		for (auto i : root)
+			cout << i << ",";
+		
+	}
+
+
+
+};
+#pragma endregion
+
+
+
 #pragma region class test
 class test
 {
@@ -624,6 +712,7 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q);
 
 #pragma region 279. Perfect Squares
 int numSquares(int n);
+int numSquaresbfs(int n);
 #pragma endregion
 
 #pragma region 300. Longest Increasing Subsequence
@@ -709,7 +798,9 @@ vector<int> spiralOrder(vector<vector<int>>& matrix);
 vector<int> getRow(int rowIndex);
 #pragma endregion
 
-
+#pragma region xiaoxiaole
+string xiaoxiaole(string s);
+#pragma endregion
 
 
 
