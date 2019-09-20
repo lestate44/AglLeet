@@ -4232,38 +4232,6 @@ int numSquares(int n)
 	}
 	return dp[n];
 }
-int numSquaresbfs(int n)
-{
-	vector<bool> visited(n + 1, false);
-	queue<int> q;
-	q.push(n);
-	int result = 0;
-	while (!q.empty())
-	{
-		int len = q.size();
-		for (int l = 0; l<len; l++)
-		{
-			int temp = q.front();
-			q.pop();
-			if (visited[temp])
-				continue;
-			else
-				visited[temp] = 1;
-			for (int i = 1; temp - i * i >= 0; i++)
-			{
-				if (temp == i * i)
-					return ++result;
-				if (visited[temp - i * i])
-					continue;
-				//visited[temp-i*i]=1;
-				q.push(temp - i * i);
-			}
-
-		}
-		result++;
-	}
-	return result;
-}
 #pragma endregion
 
 #pragma region 300. Longest Increasing Subsequence
@@ -4882,23 +4850,6 @@ vector<int> getRow(int rowIndex)
 #pragma endregion
 
 
-#pragma region xiaoxiaole
-string xiaoxiaole(string s)
-{
-	if (s.size()<3)
-		return s;
-	for (int i = 0; i < s.size()-2; i++)
-	{
-		if (s[i] == s[i + 1] &&s[i]== s[i + 2])
-		{
-			string a = s.substr(0,i);
-			string b = s.substr(i+3,s.size()-i-3);
-			return xiaoxiaole(a + b);
-		}
-	}
-	return s;
-}
-#pragma endregion
 
 
 
